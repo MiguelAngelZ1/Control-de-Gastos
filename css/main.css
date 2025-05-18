@@ -364,6 +364,11 @@ a:hover {
   transition: color 0.2s;
 }
 
-.footer-social a:hover {
+.footer-social a:hover,
+.footer-social a:focus {
   color: #fbbf24;
+}
+
+.footer-social a:active {
+  color: #fff;
 }
