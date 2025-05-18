@@ -21,16 +21,9 @@
 <body>
   <!-- CABECERA -->
   <header class="site-header">
-    <h1 class="site-title"><i class="fa-solid fa-dollar-sign"></i> Control de Gastos</h1>
-    <nav class="main-nav">
-      <ul class="nav-list">
-        <li class="nav-item">
-          <a href="/Control-de-Gastos/plantillas/gastos.html" class="nav-link">
-            <i class="fa-solid fa-wallet"></i> Gastos
-          </a>
-        </li>
-      </ul>
-    </nav>
+    <div class="header-content">
+      <h1 class="site-title"><i class="fa-solid fa-dollar-sign"></i> Control de Gastos</h1>
+    </div>
   </header>
   
   <!-- CONTENIDO PRINCIPAL -->
@@ -38,28 +31,22 @@
     <!-- Sección de Ingresos -->
     <section id="ingresos" class="ingresos-section">
       <h2 class="section-title">Registrar Ingreso</h2>
-      <!-- Formulario de ingresos: Input y botones -->
-      <div class="ingresos-form">
-        <!-- El input tiene la clase "moneda" para formatearlo automáticamente -->
+      <form class="ingresos-form">
         <input type="text" id="ingresoInput" class="ingreso-input moneda" placeholder="$0">
-        <button id="btnAgregarIngreso" class="btn btn-add">
+        <button id="btnAgregarIngreso" type="button" class="btn btn-add">
           <i class="fa-solid fa-plus"></i> Agregar Ingreso
         </button>
-        <button id="btnLimpiarIngreso" class="btn btn-clear">
+        <button id="btnLimpiarIngreso" type="button" class="btn btn-clear">
           <i class="fa-solid fa-eraser"></i> Limpiar Ingreso
         </button>
-      </div>
-      
-      <!-- Resumen Financiero -->
+      </form>
       <section id="resumen-financiero" class="resumen-section">
         <p><strong>Ingreso Total:</strong> <span id="ingresoTotal">$0</span></p>
         <p><strong>Total Gastado:</strong> <span id="totalGastado">$0</span></p>
         <p><strong>Saldo Restante:</strong> <span id="saldoRestante">$0</span></p>
       </section>
     </section>
-    
-    <!-- Botón grande y visible para ir a la sección de Gastos -->
-    <div style="text-align:center; margin:2rem 0;">
+    <div class="nav-main-container">
       <a href="/Control-de-Gastos/plantillas/gastos.html" class="btn btn-nav-main">
         <i class="fa-solid fa-wallet"></i> Ir a Gastos
       </a>
