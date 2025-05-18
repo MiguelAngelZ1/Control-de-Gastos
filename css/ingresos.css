@@ -1,1 +1,22 @@
-// Contenido de ingresos.css (se completará con contenido real luego)
+
+
+.ingresos-section {
+  margin-bottom: 2rem;
+}
+
+.ingresos-form {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.ingreso-input {
+  flex: 1 1 180px;
+  min-width: 120px;
+}
+
+.btn-add, .btn-clear {
+  min-width: 140px;
+}

@@ -1,1 +1,219 @@
-// Contenido de main.css (se completará con contenido real luego)
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+  background: #f4f6fb;
+  color: #222;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #f4f6fb 0%, #e9eafc 100%);
+}
+
+a {
+  color: #3b82f6;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.site-header {
+  background: #3b82f6;
+  color: #fff;
+  padding: 1.5rem 0 1rem 0;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.08);
+}
+
+.site-title {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: 2rem;
+}
+
+.main-nav {
+  margin-top: 0.5rem;
+  margin-left: 2rem;
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-link {
+  color: #fff;
+  font-weight: 500;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.nav-link:hover {
+  background: #2563eb;
+  color: #fff;
+}
+
+.site-main {
+  flex: 1;
+  width: 100%;
+  max-width: 700px;
+  margin: 2rem auto 0 auto;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 24px rgba(59, 130, 246, 0.08);
+  padding: 2rem 2.5rem 2.5rem 2.5rem;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  color: #3b82f6;
+  margin-bottom: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #3b82f6;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.08);
+}
+
+.btn:hover, .btn:focus {
+  background: #2563eb;
+  outline: none;
+}
+
+.btn-clear {
+  background: #f87171;
+}
+
+.btn-clear:hover, .btn-clear:focus {
+  background: #dc2626;
+}
+
+.btn-add {
+  background: #22c55e;
+}
+
+.btn-add:hover, .btn-add:focus {
+  background: #16a34a;
+}
+
+.input-descripcion, .input-monto, .input-observaciones, .input-estado,
+.ingreso-input, .gasto-input, select, input[type="text"] {
+  width: 100%;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 1rem;
+  margin-bottom: 0.8rem;
+  background: #f8fafc;
+  transition: border 0.2s;
+}
+
+input:focus, select:focus {
+  border: 1.5px solid #3b82f6;
+  outline: none;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.error-message {
+  color: #dc2626;
+  font-size: 0.95rem;
+  margin-top: -0.5rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.resumen-section, .resumen-financiero {
+  background: #f1f5f9;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  margin-top: 1.5rem;
+  font-size: 1.1rem;
+  color: #222;
+  box-shadow: 0 1px 4px rgba(59, 130, 246, 0.04);
+}
+
+@media (max-width: 800px) {
+  .site-main {
+    max-width: 98vw;
+    padding: 1rem;
+  }
+  .site-title, .main-nav {
+    margin-left: 1rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .site-main {
+    padding: 0.5rem;
+  }
+  .site-title {
+    font-size: 1.2rem;
+  }
+}
+
+.site-footer {
+  background: #3b82f6;
+  color: #fff;
+  text-align: center;
+  padding: 1.2rem 0 0.5rem 0;
+  margin-top: 2rem;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+  box-shadow: 0 -2px 8px rgba(59, 130, 246, 0.08);
+  position: relative;
+}
+
+.footer-social {
+  margin: 0.5rem 0 0.7rem 0;
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+}
+
+.footer-social a {
+  color: #fff;
+  font-size: 1.5rem;
+  transition: color 0.2s;
+}
+
+.footer-social a:hover {
+  color: #fbbf24;
+}

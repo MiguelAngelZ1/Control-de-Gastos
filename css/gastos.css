@@ -1,1 +1,22 @@
-// Contenido de gastos.css (se completará con contenido real luego)
+
+
+.gastos-section {
+  margin-bottom: 2rem;
+}
+
+.gastos-form {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.gasto-input {
+  flex: 1 1 180px;
+  min-width: 120px;
+}
+
+.btn-add, .btn-clear {
+  min-width: 140px;
+}
