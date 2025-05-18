@@ -1,29 +1,34 @@
+<!-- Archivo: gastos.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <!-- Configuración básica de la página -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gastos - Control de Gastos</title>
+  <title>Control de Gastos</title>
   
-  <!-- Enlace funcional a Font Awesome para los íconos -->
+  <!-- Enlace funcional a Font Awesome para cargar los íconos -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <!-- Enlaces a hojas de estilo globales y específicos para Gastos -->
+
+  <!-- Enlaces a hojas de estilo globales y específicos -->
   <link rel="stylesheet" href="../css/main.css">
   <link rel="stylesheet" href="../css/header.css">
   <link rel="stylesheet" href="../css/footer.css">
   <link rel="stylesheet" href="../css/gastos.css">
+  
+  
+  <!-- Incluir Cleave.js para formatear los inputs de moneda -->
+  <script src="https://cdn.jsdelivr.net/npm/cleave.js@1.6.0/dist/cleave.min.js"></script>
 </head>
 <body>
-  <!-- CABECERA: Header con título y navegación -->
+  <!-- CABECERA -->
   <header class="site-header">
-    <h1 class="site-title"><i class="fa-solid fa-wallet"></i> Gastos</h1>
+    <h1 class="site-title"><i class="fa-solid fa-dollar-sign"></i> Control de Gastos</h1>
     <nav class="main-nav">
       <ul class="nav-list">
         <li class="nav-item">
-          <a href="../index.html" class="nav-link">
-            <i class="fa-solid fa-house"></i> Inicio
+          <a href="plantillas/gastos.html" class="nav-link">
+            <i class="fa-solid fa-wallet"></i> Gastos
           </a>
         </li>
       </ul>
@@ -32,242 +37,37 @@
   
   <!-- CONTENIDO PRINCIPAL -->
   <main class="site-main">
-    <!-- Sección para agregar un nuevo gasto fijo -->
-    <section id="nuevo-gasto" class="nuevo-gasto">
-      <h2 class="section-title">Agregar Gasto</h2>
-      <form id="form-gasto">
-        <div class="form-group">
-          <label for="descripcion">Descripción:</label>
-          <input type="text" id="descripcion" class="input-descripcion" placeholder="Ej. Alquiler" required>
-          <span class="error-message" id="error-descripcion"></span>
-        </div>
-        <div class="form-group">
-          <label for="monto">Monto:</label>
-          <input type="text" id="monto" class="input-monto moneda" placeholder="$0,00" required>
-          <span class="error-message" id="error-monto"></span>
-        </div>
-        <div class="form-group">
-          <label for="observaciones">Observaciones:</label>
-          <input type="text" id="observaciones" class="input-observaciones" placeholder="Opcional">
-        </div>
-        <div class="form-group">
-          <label for="estado">Estado:</label>
-          <select id="estado" class="input-estado" required>
-            <option value="" disabled selected>Seleccionar estado</option>
-            <option value="Pendiente">Pendiente</option>
-            <option value="Pagado">Pagado</option>
-          </select>
-          <span class="error-message" id="error-estado"></span>
-        </div>
-        <button type="submit" class="btn btn-add-gasto">
+    <!-- Sección de Gastos -->
+    <section id="gastos" class="gastos-section">
+      <h2 class="section-title">Registrar Gastos</h2>
+      <!-- Formulario de gastos: Input y botones -->
+      <div class="gastos-form">
+        <!-- El input tiene la clase "moneda" para formatearlo automáticamente -->
+        <input type="text" id="gastoInput" class="gasto-input moneda" placeholder="$0">
+        <button id="btnAgregarGasto" class="btn btn-add">
           <i class="fa-solid fa-plus"></i> Agregar Gasto
         </button>
-      </form>
+        <button id="btnLimpiarGasto" class="btn btn-clear">
+          <i class="fa-solid fa-eraser"></i> Limpiar Gasto
+        </button>
+      </div>
+      
+      <!-- Resumen de Gastos -->
+      <section id="resumen-gastos" class="resumen-section">
+        <p><strong>Total Gastado:</strong> <span id="totalGastado">$0</span></p>
+        <p><strong>Saldo Restante:</strong> <span id="saldoRestante">$0</span></p>
+      </section>
     </section>
-    
-    <!-- Sección para listar los gastos fijos registrados -->
-    <section id="lista-gastos" class="lista-gastos">
-      <h2 class="section-title">Gastos Fijos</h2>
-      <div class="tabla-responsive">
-        <table id="tabla-gastos" class="tabla-gastos">
-          <thead>
-            <tr>
-              <th>Descripción</th>
-              <th>Monto</th>
-              <th>Observaciones</th>
-              <th>Estado</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- Las filas se agregarán dinámicamente mediante JavaScript -->
-          </tbody>
-        </table>
-      </div>
-    </section>
-    
-<!-- Sección de Gastos Semanales -->
-<section id="gastos-semanales">
-  <h2 class="section-title">Gastos Semanales</h2>
-  <div class="semanas">
-    <!-- Semana 1 -->
-    <div class="semana" data-semana="1">
-      <h3>Semana 1</h3>
-      <div class="progress-bar-container">
-        <div class="progress-bar" style="width: 100%;">
-          <span class="progress-text">$0</span>
-        </div>
-      </div>
-      <button class="btn-add-semana" data-semana="1">
-        <i class="fa-solid fa-plus"></i> Agregar Gasto
-      </button>
-      <!-- Botón para limpiar los gastos de la semana -->
-      <button class="btn-clear-week" data-semana="1">
-        <i class="fa-solid fa-trash"></i> Limpiar Semana
-      </button>
-      <ul class="lista-gastos-semana" data-semana="1">
-        <!-- Aquí se listarán los gastos para la semana 1 -->
-      </ul>
-    </div>
-
-    <!-- Semana 2 -->
-    <div class="semana" data-semana="2">
-      <h3>Semana 2</h3>
-      <div class="progress-bar-container">
-        <div class="progress-bar" style="width: 100%;">
-          <span class="progress-text">$0</span>
-        </div>
-      </div>
-      <button class="btn-add-semana" data-semana="2">
-        <i class="fa-solid fa-plus"></i> Agregar Gasto
-      </button>
-      <button class="btn-clear-week" data-semana="2">
-        <i class="fa-solid fa-trash"></i> Limpiar Semana
-      </button>
-      <ul class="lista-gastos-semana" data-semana="2">
-        <!-- Aquí se listarán los gastos para la semana 2 -->
-      </ul>
-    </div>
-
-    <!-- Semana 3 -->
-    <div class="semana" data-semana="3">
-      <h3>Semana 3</h3>
-      <div class="progress-bar-container">
-        <div class="progress-bar" style="width: 100%;">
-          <span class="progress-text">$0</span>
-        </div>
-      </div>
-      <button class="btn-add-semana" data-semana="3">
-        <i class="fa-solid fa-plus"></i> Agregar Gasto
-      </button>
-      <button class="btn-clear-week" data-semana="3">
-        <i class="fa-solid fa-trash"></i> Limpiar Semana
-      </button>
-      <ul class="lista-gastos-semana" data-semana="3">
-        <!-- Aquí se listarán los gastos para la semana 3 -->
-      </ul>
-    </div>
-
-    <!-- Semana 4 -->
-    <div class="semana" data-semana="4">
-      <h3>Semana 4</h3>
-      <div class="progress-bar-container">
-        <div class="progress-bar" style="width: 100%;">
-          <span class="progress-text">$0</span>
-        </div>
-      </div>
-      <button class="btn-add-semana" data-semana="4">
-        <i class="fa-solid fa-plus"></i> Agregar Gasto
-      </button>
-      <button class="btn-clear-week" data-semana="4">
-        <i class="fa-solid fa-trash"></i> Limpiar Semana
-      </button>
-      <ul class="lista-gastos-semana" data-semana="4">
-        <!-- Aquí se listarán los gastos para la semana 4 -->
-      </ul>
-    </div>
-  </div>
-  <!-- Botón global para limpiar TODAS las semanas -->
-  <div id="clear-all-container" style="text-align: center; margin-top: 1rem;">
-    <button class="btn-clear-all">
-      <i class="fa-solid fa-trash"></i> Limpiar Todas las Semanas
-    </button>
-  </div>
-</section>
   </main>
-  
-  <!-- Modal para confirmar eliminación de gastos fijos (opcional) -->
-  <div id="modal-delete" class="modal">
-    <div class="modal-content">
-      <p>¿Está seguro que desea eliminar este gasto?</p>
-      <div class="modal-actions">
-        <button id="modal-confirm" class="btn btn-confirm">
-          <i class="fa-solid fa-check"></i> Confirmar
-        </button>
-        <button id="modal-cancel" class="btn btn-cancel">
-          <i class="fa-solid fa-times"></i> Cancelar
-        </button>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Modal para editar un gasto fijo (opcional) -->
-  <div id="modal-edit" class="modal">
-    <div class="modal-content">
-      <h3>Actualizar Gasto Fijo</h3>
-      <form id="form-edit">
-        <input type="hidden" id="edit-id">
-        <div class="form-group">
-          <label for="edit-monto">Monto:</label>
-          <input type="text" id="edit-monto" class="moneda" placeholder="$0,00" required>
-          <span class="error-message" id="error-edit-monto"></span>
-        </div>
-        <div class="form-group">
-          <label for="edit-observaciones">Observaciones:</label>
-          <input type="text" id="edit-observaciones" placeholder="Opcional">
-        </div>
-        <div class="form-group">
-          <label for="edit-estado">Estado:</label>
-          <select id="edit-estado" required>
-            <option value="" disabled selected>Seleccionar estado</option>
-            <option value="Pendiente">Pendiente</option>
-            <option value="Pagado">Pagado</option>
-          </select>
-          <span class="error-message" id="error-edit-estado"></span>
-        </div>
-        <div class="modal-actions">
-          <button type="submit" class="btn btn-save-edit">
-            <i class="fa-solid fa-check"></i> Guardar Cambios
-          </button>
-          <button type="button" id="cancel-edit" class="btn btn-cancel-edit">
-            <i class="fa-solid fa-times"></i> Cancelar
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-  
-  <!-- Modal para agregar un gasto semanal -->
-  <div id="modal-semana-add" class="modal">
-    <div class="modal-content">
-      <h3>Agregar Gasto Semanal</h3>
-      <form id="form-semana-add">
-        <input type="hidden" id="semana-numero">
-        <div class="form-group">
-          <label for="semana-descripcion">Descripción:</label>
-          <input type="text" id="semana-descripcion" placeholder="Descripción del gasto" required>
-        </div>
-        <div class="form-group">
-          <label for="semana-monto">Monto:</label>
-          <input type="text" id="semana-monto" class="moneda" placeholder="$0,00" required>
-        </div>
-        <div class="form-group">
-          <label for="semana-fecha">Fecha:</label>
-          <input type="text" id="semana-fecha" readonly>
-        </div>
-        <div class="modal-actions">
-          <button type="submit" class="btn btn-confirm">
-            <i class="fa-solid fa-check"></i> Agregar
-          </button>
-          <button type="button" id="modal-semana-cancel" class="btn btn-cancel">
-            <i class="fa-solid fa-times"></i> Cancelar
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
   
   <!-- PIE DE PÁGINA -->
   <footer class="site-footer">
     <p>&copy; 2025 Control de Gastos</p>
   </footer>
   
-  <!-- Inclusión de scripts:
-       Primero tu script específico de Gastos Semanales,
-       luego Cleave.js y finalmente main.js (u otros scripts globales) -->
+  <!-- Inclusión de la lógica del módulo de gastos y scripts globales -->
   <script src="../js/gastosSemanales.js"></script>
   <script src="../js/gastosFunctions.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/cleave.js@1.6.0/dist/cleave.min.js"></script>
   <script src="../js/main.js"></script>
 </body>
 </html>
