@@ -1,0 +1,70 @@
+<!-- Archivo: index.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Configuración básica de la página -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Control de Gastos</title>
+  
+  <!-- Enlace funcional a Font Awesome para cargar los íconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Enlaces a hojas de estilo globales y específicos -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/ingresos.css">
+  
+  <!-- Incluir Cleave.js para formatear los inputs de moneda -->
+  <script src="https://cdn.jsdelivr.net/npm/cleave.js@1.6.0/dist/cleave.min.js"></script>
+</head>
+<body>
+  <!-- CABECERA -->
+  <header class="site-header">
+    <h1 class="site-title"><i class="fa-solid fa-dollar-sign"></i> Control de Gastos</h1>
+    <nav class="main-nav">
+      <ul class="nav-list">
+        <li class="nav-item">
+          <a href="plantillas/gastos.html" class="nav-link">
+            <i class="fa-solid fa-wallet"></i> Gastos
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="site-main">
+    <!-- Sección de Ingresos -->
+    <section id="ingresos" class="ingresos-section">
+      <h2 class="section-title">Registrar Ingreso</h2>
+      <!-- Formulario de ingresos: Input y botones -->
+      <div class="ingresos-form">
+        <!-- El input tiene la clase "moneda" para formatearlo automáticamente -->
+        <input type="text" id="ingresoInput" class="ingreso-input moneda" placeholder="$0">
+        <button id="btnAgregarIngreso" class="btn btn-add">
+          <i class="fa-solid fa-plus"></i> Agregar Ingreso
+        </button>
+        <button id="btnLimpiarIngreso" class="btn btn-clear">
+          <i class="fa-solid fa-eraser"></i> Limpiar Ingreso
+        </button>
+      </div>
+      
+      <!-- Resumen Financiero -->
+      <section id="resumen-financiero" class="resumen-section">
+        <p><strong>Ingreso Total:</strong> <span id="ingresoTotal">$0</span></p>
+        <p><strong>Total Gastado:</strong> <span id="totalGastado">$0</span></p>
+        <p><strong>Saldo Restante:</strong> <span id="saldoRestante">$0</span></p>
+      </section>
+    </section>
+  </main>
+  
+  <!-- PIE DE PÁGINA -->
+  <footer class="site-footer">
+    <p>&copy; 2025 Control de Gastos</p>
+  </footer>
+  
+  <!-- Inclusión de la lógica del módulo de ingresos y scripts globales -->
+  <script src="js/ingresos.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
