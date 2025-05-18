@@ -23,51 +23,103 @@
 <body>
   <!-- CABECERA -->
   <header class="site-header">
-    <h1 class="site-title"><i class="fa-solid fa-dollar-sign"></i> Control de Gastos</h1>
+    <h1 class="site-title"><i class="fa-solid fa-wallet"></i> Gastos</h1>
     <nav class="main-nav">
       <ul class="nav-list">
         <li class="nav-item">
-          <a href="/Control-de-Gastos/plantillas/gastos.html" class="nav-link">
-            <i class="fa-solid fa-wallet"></i> Gastos
+          <a href="/Control-de-Gastos/index.html" class="btn btn-nav-main">
+            <i class="fa-solid fa-house"></i> Volver a Inicio
           </a>
         </li>
       </ul>
     </nav>
   </header>
-  
-  <!-- CONTENIDO PRINCIPAL -->
   <main class="site-main">
-    <!-- Sección de Gastos -->
-    <section id="gastos" class="gastos-section">
-      <h2 class="section-title">Registrar Gastos</h2>
-      <!-- Formulario de gastos: Input y botones -->
-      <div class="gastos-form">
-        <!-- El input tiene la clase "moneda" para formatearlo automáticamente -->
-        <input type="text" id="gastoInput" class="gasto-input moneda" placeholder="$0">
-        <button id="btnAgregarGasto" class="btn btn-add">
-          <i class="fa-solid fa-plus"></i> Agregar Gasto
-        </button>
-        <button id="btnLimpiarGasto" class="btn btn-clear">
-          <i class="fa-solid fa-eraser"></i> Limpiar Gasto
-        </button>
+    <!-- Formulario para agregar gasto fijo (modal) -->
+    <button class="btn btn-add" id="btnShowModalGastoFijo" style="margin-bottom:1.5rem;">
+      <i class="fa-solid fa-plus"></i> Agregar Gasto Fijo
+    </button>
+    <div id="modalGastoFijo" class="modal" style="display:none;">
+      <div class="modal-content">
+        <h2>Agregar Gasto Fijo</h2>
+        <form id="formGastoFijo">
+          <div class="form-group">
+            <label for="descripcionFijo">Descripción:</label>
+            <input type="text" id="descripcionFijo" required>
+          </div>
+          <div class="form-group">
+            <label for="montoFijo">Monto:</label>
+            <input type="text" id="montoFijo" class="moneda" required>
+          </div>
+          <div class="form-group">
+            <label for="estadoFijo">Estado:</label>
+            <select id="estadoFijo" required>
+              <option value="">Seleccionar una opción</option>
+              <option value="Pendiente">Pendiente</option>
+              <option value="Pagado">Pagado</option>
+            </select>
+          </div>
+          <div style="text-align:right;">
+            <button type="submit" class="btn btn-add"><i class="fa-solid fa-check"></i> Guardar</button>
+            <button type="button" class="btn btn-clear" id="btnCerrarModalGastoFijo"><i class="fa-solid fa-xmark"></i> Cancelar</button>
+          </div>
+        </form>
       </div>
-      
-      <!-- Resumen de Gastos -->
-      <section id="resumen-gastos" class="resumen-section">
-        <p><strong>Total Gastado:</strong> <span id="totalGastado">$0</span></p>
-        <p><strong>Saldo Restante:</strong> <span id="saldoRestante">$0</span></p>
-      </section>
+    </div>
+    <!-- Tabla de gastos fijos -->
+    <section>
+      <h2 class="section-title">Gastos Fijos</h2>
+      <div class="tabla-responsive">
+        <table id="tablaGastosFijos" class="tabla-gastos">
+          <thead>
+            <tr>
+              <th>Descripción</th>
+              <th>Monto</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Filas dinámicas -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <!-- Gastos semanales -->
+    <section style="margin-top:2.5rem;">
+      <h2 class="section-title">Gastos Semanales</h2>
+      <div id="gastosSemanalesContainer">
+        <!-- Barras y controles semanales generados por JS -->
+      </div>
     </section>
   </main>
-  
   <!-- PIE DE PÁGINA -->
   <footer class="site-footer">
+    <div class="footer-social">
+      <a href="https://github.com/tuusuario" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+      <a href="https://twitter.com/tuusuario" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+      <a href="https://linkedin.com/in/tuusuario" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+    </div>
     <p>&copy; 2025 Control de Gastos</p>
   </footer>
-  
-  <!-- Inclusión de la lógica del módulo de gastos y scripts globales -->
-  <script src="/Control-de-Gastos/js/gastosSemanales.js"></script>
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/cleave.js@1.6.0/dist/cleave.min.js"></script>
   <script src="/Control-de-Gastos/js/gastosFunctions.js"></script>
+  <script src="/Control-de-Gastos/js/gastosSemanales.js"></script>
   <script src="/Control-de-Gastos/js/main.js"></script>
+  <script>
+    // Modal lógica básica
+    document.getElementById('btnShowModalGastoFijo').onclick = () => {
+      document.getElementById('modalGastoFijo').style.display = 'block';
+    };
+    document.getElementById('btnCerrarModalGastoFijo').onclick = () => {
+      document.getElementById('modalGastoFijo').style.display = 'none';
+    };
+    // Cierra modal al hacer click fuera
+    window.onclick = function(event) {
+      const modal = document.getElementById('modalGastoFijo');
+      if (event.target === modal) modal.style.display = 'none';
+    };
+  </script>
 </body>
 </html>

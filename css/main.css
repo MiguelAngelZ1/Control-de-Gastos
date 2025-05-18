@@ -131,64 +131,125 @@ a:hover {
   background: #16a34a;
 }
 
-.input-descripcion, .input-monto, .input-observaciones, .input-estado,
-.ingreso-input, .gasto-input, select, input[type="text"] {
+.btn-nav-main {
+  font-size: 1.1rem;
+  padding: 0.7rem 1.7rem;
+  margin: 0.5rem 0;
+  background: linear-gradient(90deg, #3b82f6 60%, #22c55e 100%);
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  transition: background 0.2s, transform 0.2s;
+  box-shadow: 0 4px 16px rgba(59,130,246,0.10);
+}
+
+.btn-nav-main:hover {
+  background: linear-gradient(90deg, #2563eb 60%, #16a34a 100%);
+  transform: scale(1.04);
+  color: #fff;
+}
+
+/* Modal estilos */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.3);
+  justify-content: center;
+  align-items: center;
+}
+.modal-content {
+  background: #fff;
+  padding: 2rem 2.5rem;
+  border-radius: 12px;
+  max-width: 400px;
+  margin: 10vh auto;
+  box-shadow: 0 8px 32px rgba(59,130,246,0.15);
+  position: relative;
+}
+
+/* Tabla gastos fijos */
+.tabla-gastos {
   width: 100%;
-  padding: 0.5rem 0.8rem;
-  border: 1px solid #cbd5e1;
-  border-radius: 6px;
-  font-size: 1rem;
-  margin-bottom: 0.8rem;
-  background: #f8fafc;
-  transition: border 0.2s;
+  border-collapse: collapse;
+  margin-top: 1rem;
 }
-
-input:focus, select:focus {
-  border: 1.5px solid #3b82f6;
-  outline: none;
+.tabla-gastos th, .tabla-gastos td {
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
 }
-
-.form-group {
-  margin-bottom: 1rem;
+.tabla-gastos th {
+  background: #f1f5f9;
+  color: #3b82f6;
+  font-weight: 600;
 }
-
-.error-message {
-  color: #dc2626;
+.tabla-gastos td {
+  font-size: 1.05rem;
+}
+.tabla-gastos tr:last-child td {
+  border-bottom: none;
+}
+.tabla-gastos .btn {
   font-size: 0.95rem;
-  margin-top: -0.5rem;
-  margin-bottom: 0.5rem;
+  padding: 0.3rem 0.7rem;
+  margin-right: 0.3rem;
+}
+
+/* Iconos de estado */
+.estado-icon {
+  font-size: 1.2rem;
+  vertical-align: middle;
+}
+.estado-pagado {
+  color: #22c55e;
+}
+.estado-pendiente {
+  color: #f87171;
+}
+
+/* Barras de estado semanales */
+.semana-bar-container {
+  margin: 1.2rem 0;
+}
+.semana-bar-label {
+  font-weight: 500;
+  margin-bottom: 0.3rem;
   display: block;
 }
-
-.resumen-section, .resumen-financiero {
-  background: #f1f5f9;
+.semana-bar-bg {
+  background: #e5e7eb;
   border-radius: 8px;
-  padding: 1rem 1.5rem;
-  margin-top: 1.5rem;
-  font-size: 1.1rem;
-  color: #222;
-  box-shadow: 0 1px 4px rgba(59, 130, 246, 0.04);
+  height: 22px;
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+.semana-bar-fill {
+  height: 100%;
+  border-radius: 8px;
+  transition: width 0.4s;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-weight: 600;
+  color: #fff;
+  padding-right: 0.7rem;
+  font-size: 1rem;
+}
+.semana-bar-fill.green {
+  background: #22c55e;
+}
+.semana-bar-fill.yellow {
+  background: #fbbf24;
+}
+.semana-bar-fill.red {
+  background: #f87171;
 }
 
-@media (max-width: 800px) {
-  .site-main {
-    max-width: 98vw;
-    padding: 1rem;
-  }
-  .site-title, .main-nav {
-    margin-left: 1rem;
-  }
-}
-
-@media (max-width: 500px) {
-  .site-main {
-    padding: 0.5rem;
-  }
-  .site-title {
-    font-size: 1.2rem;
-  }
-}
-
+/* Footer y redes sociales */
 .site-footer {
   background: #3b82f6;
   color: #fff;
