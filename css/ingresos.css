@@ -39,13 +39,14 @@
 
 .ingreso-input {
   width: 100%;
-  padding: 0.7rem 1.1rem;
+  padding: 1.1rem 1.3rem;
   border: 1.5px solid #dbeafe;
   border-radius: 8px;
-  font-size: 1.1rem;
+  font-size: 1.5rem;
   background: #fff;
   transition: border 0.2s;
   outline: none;
+  min-height: 3.2rem;
 }
 
 .ingreso-input:focus {
