@@ -5,6 +5,15 @@
   box-sizing: border-box;
 }
 
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Evita scroll horizontal */
+  box-sizing: border-box;
+}
+
 html {
   font-size: 16px;
   font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
@@ -13,10 +22,13 @@ html {
 }
 
 body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #eef2ff;
+  color: #222;
+  width: 100vw;
+  max-width: 100vw;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background: linear-gradient(135deg, #f4f6fb 0%, #e9eafc 100%);
+  box-sizing: border-box;
 }
 
 a {
@@ -88,6 +100,12 @@ a:hover {
 .nav-link:hover {
   background: #2563eb;
   color: #fff;
+}
+
+.site-main, .site-header, .site-footer {
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .site-main {

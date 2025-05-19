@@ -1,5 +1,7 @@
 .ingresos-section {
   margin-bottom: 2rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .ingresos-card {
@@ -8,8 +10,10 @@
   box-shadow: 0 4px 24px rgba(59, 130, 246, 0.10);
   padding: 2.5rem 2rem 2rem 2rem;
   max-width: 480px;
+  width: 100%;
   margin: 2rem auto 0 auto;
   border: 1.5px solid #e0e7ef;
+  box-sizing: border-box;
 }
 
 .ingresos-title {
@@ -30,23 +34,26 @@
   align-items: center;
   margin-bottom: 2rem;
   justify-content: flex-start;
+  width: 100%;
 }
 
 .input-group {
   flex: 1 1 180px;
   min-width: 120px;
+  width: 100%;
 }
 
 .ingreso-input {
   width: 100%;
-  padding: 1.1rem 1.3rem;
+  padding: 1.3rem 1.5rem;
   border: 1.5px solid #dbeafe;
   border-radius: 8px;
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   background: #fff;
   transition: border 0.2s;
   outline: none;
-  min-height: 3.2rem;
+  min-height: 3.5rem;
+  box-sizing: border-box;
 }
 
 .ingreso-input:focus {
@@ -55,22 +62,26 @@
 }
 
 .btn-add, .btn-clear {
-  min-width: 140px;
-  font-size: 1.05rem;
+  min-width: 120px;
+  font-size: 1.1rem;
   font-weight: 500;
   border-radius: 8px;
-  padding: 0.7rem 1.2rem;
+  padding: 0.9rem 1.2rem;
   box-shadow: 0 2px 8px rgba(59, 130, 246, 0.08);
+  width: 100%;
+  max-width: 180px;
 }
 
 .resumen-section {
   margin-top: 1.5rem;
+  width: 100%;
 }
 
 .resumen-grid {
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
+  width: 100%;
 }
 
 .resumen-item {
@@ -81,12 +92,14 @@
   border-radius: 8px;
   padding: 0.7rem 1.1rem;
   font-size: 1.08rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .resumen-label {
   font-weight: 600;
   color: #222;
-  min-width: 150px;
+  min-width: 120px;
   display: flex;
   align-items: center;
   gap: 0.4rem;
@@ -101,15 +114,26 @@
 @media (max-width: 600px) {
   .ingresos-card {
     padding: 1.2rem 0.7rem 1rem 0.7rem;
-    max-width: 98vw;
+    max-width: 99vw;
+    width: 99vw;
   }
   .ingresos-form {
     flex-direction: column;
     gap: 0.7rem;
+    width: 100%;
+  }
+  .input-group {
+    width: 100%;
+  }
+  .btn-add, .btn-clear {
+    width: 100%;
+    min-width: unset;
+    max-width: unset;
   }
   .resumen-item {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.2rem;
+    width: 100%;
   }
 }
