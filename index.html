@@ -34,21 +34,36 @@
   <main class="site-main">
     <!-- Sección de Ingresos -->
     <section id="ingresos" class="ingresos-section">
-      <h2 class="section-title">Registrar Ingreso</h2>
-      <form class="ingresos-form">
-        <input type="text" id="ingresoInput" class="ingreso-input moneda" placeholder="$0">
-        <button id="btnAgregarIngreso" type="button" class="btn btn-add">
-          <i class="fa-solid fa-plus"></i> Agregar Ingreso
-        </button>
-        <button id="btnLimpiarIngreso" type="button" class="btn btn-clear">
-          <i class="fa-solid fa-eraser"></i> Limpiar Ingreso
-        </button>
-      </form>
-      <section id="resumen-financiero" class="resumen-section">
-        <p><strong>Ingreso Total:</strong> <span id="ingresoTotal">$0</span></p>
-        <p><strong>Total Gastado:</strong> <span id="totalGastado">$0</span></p>
-        <p><strong>Saldo Restante:</strong> <span id="saldoRestante">$0</span></p>
-      </section>
+      <div class="ingresos-card">
+        <h2 class="section-title ingresos-title"><i class="fa-solid fa-circle-plus"></i> Registrar Ingreso</h2>
+        <form class="ingresos-form">
+          <div class="input-group">
+            <input type="text" id="ingresoInput" class="ingreso-input moneda" placeholder="$0">
+          </div>
+          <button id="btnAgregarIngreso" type="button" class="btn btn-add">
+            <i class="fa-solid fa-plus"></i> Agregar Ingreso
+          </button>
+          <button id="btnLimpiarIngreso" type="button" class="btn btn-clear">
+            <i class="fa-solid fa-eraser"></i> Limpiar Ingreso
+          </button>
+        </form>
+        <section id="resumen-financiero" class="resumen-section">
+          <div class="resumen-grid">
+            <div class="resumen-item">
+              <span class="resumen-label"><i class="fa-solid fa-sack-dollar"></i> Ingreso Total:</span>
+              <span id="ingresoTotal" class="resumen-value">$0</span>
+            </div>
+            <div class="resumen-item">
+              <span class="resumen-label"><i class="fa-solid fa-money-bill-wave"></i> Total Gastado:</span>
+              <span id="totalGastado" class="resumen-value">$0</span>
+            </div>
+            <div class="resumen-item">
+              <span class="resumen-label"><i class="fa-solid fa-wallet"></i> Saldo Restante:</span>
+              <span id="saldoRestante" class="resumen-value">$0</span>
+            </div>
+          </div>
+        </section>
+      </div>
     </section>
   </main>
   <!-- PIE DE PÁGINA -->

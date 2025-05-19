@@ -1,7 +1,26 @@
-
-
 .ingresos-section {
   margin-bottom: 2rem;
+}
+
+.ingresos-card {
+  background: #f8fafc;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(59, 130, 246, 0.10);
+  padding: 2.5rem 2rem 2rem 2rem;
+  max-width: 480px;
+  margin: 2rem auto 0 auto;
+  border: 1.5px solid #e0e7ef;
+}
+
+.ingresos-title {
+  color: #3973f7;
+  font-size: 1.7rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  letter-spacing: 0.5px;
 }
 
 .ingresos-form {
@@ -9,14 +28,87 @@
   gap: 1rem;
   flex-wrap: wrap;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  justify-content: flex-start;
 }
 
-.ingreso-input {
+.input-group {
   flex: 1 1 180px;
   min-width: 120px;
 }
 
+.ingreso-input {
+  width: 100%;
+  padding: 0.7rem 1.1rem;
+  border: 1.5px solid #dbeafe;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  background: #fff;
+  transition: border 0.2s;
+  outline: none;
+}
+
+.ingreso-input:focus {
+  border: 1.5px solid #3973f7;
+  background: #f0f6ff;
+}
+
 .btn-add, .btn-clear {
   min-width: 140px;
+  font-size: 1.05rem;
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 0.7rem 1.2rem;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.08);
+}
+
+.resumen-section {
+  margin-top: 1.5rem;
+}
+
+.resumen-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.resumen-item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  background: #e9eafc;
+  border-radius: 8px;
+  padding: 0.7rem 1.1rem;
+  font-size: 1.08rem;
+}
+
+.resumen-label {
+  font-weight: 600;
+  color: #222;
+  min-width: 150px;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.resumen-value {
+  color: #3973f7;
+  font-weight: 700;
+  font-size: 1.08rem;
+}
+
+@media (max-width: 600px) {
+  .ingresos-card {
+    padding: 1.2rem 0.7rem 1rem 0.7rem;
+    max-width: 98vw;
+  }
+  .ingresos-form {
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .resumen-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+  }
 }
