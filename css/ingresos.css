@@ -5,124 +5,111 @@
 }
 
 .ingresos-card {
-  background: #f8fafc;
-  border-radius: 10px;
-  box-shadow: 0 4px 24px rgba(59, 130, 246, 0.10);
-  padding: 1.2rem 1rem 1rem 1rem;
-  max-width: 370px;
-  width: 100%;
-  margin: 1.2rem auto 0 auto;
-  border: 1.5px solid #e0e7ef;
-  box-sizing: border-box;
+  padding: 1rem 1.2rem;
+  max-width: 320px;
+  margin: 2rem auto 0 auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(60, 60, 100, 0.07);
+  background: #fff;
 }
 
 .ingresos-title {
-  color: #3973f7;
-  font-size: 1.15rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
+  font-size: 1.05rem;
+  margin-bottom: 0.7rem;
+  font-weight: 600;
+  color: #2563eb;
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  letter-spacing: 0.5px;
 }
 
 .ingresos-form {
   display: flex;
-  gap: 0.5rem;
-  flex-wrap: nowrap;
+  gap: 0.4rem;
+  margin-bottom: 0.7rem;
   align-items: center;
-  margin-bottom: 1rem;
-  justify-content: flex-start;
-  width: 100%;
 }
 
 .input-group {
-  flex: 1 1 180px;
-  min-width: 90px;
-  width: 100%;
+  flex: 1;
 }
 
 .ingreso-input {
+  padding: 0.35rem 0.7rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #d1d5db;
   width: 100%;
-  padding: 0.7rem 1rem;
-  border: 1.5px solid #dbeafe;
-  border-radius: 6px;
-  font-size: 1.1rem;
-  background: #fff;
-  transition: border 0.2s;
-  outline: none;
-  min-height: unset;
   box-sizing: border-box;
 }
 
-.ingreso-input:focus {
-  border: 1.5px solid #3973f7;
-  background: #f0f6ff;
+.btn-add, .btn-clear {
+  font-size: 0.95rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 5px;
+  min-width: unset;
+  width: auto;
+  height: 2.1rem;
+  box-shadow: none;
 }
 
-.btn-add, .btn-clear {
-  min-width: 80px;
-  font-size: 0.98rem;
-  font-weight: 500;
-  border-radius: 6px;
-  padding: 0.5rem 0.7rem;
-  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.08);
-  width: 100%;
-  max-width: 110px;
+.btn-add {
+  background: #22c55e;
+  color: #fff;
+  border: none;
+}
+
+.btn-clear {
+  background: #ef4444;
+  color: #fff;
+  border: none;
+  margin-left: 0;
 }
 
 .resumen-section {
-  margin-top: 0.7rem;
-  width: 100%;
+  margin-top: 0.5rem;
 }
 
 .resumen-grid {
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
-  width: 100%;
+  gap: 0.25rem;
 }
 
 .resumen-item {
+  background: #f1f5f9;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.97rem;
+  border-radius: 5px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 0.7rem;
-  background: #e9eafc;
-  border-radius: 6px;
-  padding: 0.4rem 0.7rem;
-  font-size: 0.98rem;
-  width: 100%;
-  box-sizing: border-box;
 }
 
 .resumen-label {
-  font-weight: 600;
-  color: #222;
-  min-width: 80px;
+  color: #334155;
+  font-size: 0.97rem;
   display: flex;
   align-items: center;
   gap: 0.2rem;
 }
 
 .resumen-value {
-  color: #3973f7;
-  font-weight: 700;
-  font-size: 0.98rem;
+  font-weight: 600;
+  color: #2563eb;
+  font-size: 0.97rem;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 500px) {
   .ingresos-card {
-    padding: 0.7rem 0.3rem 0.7rem 0.3rem;
-    max-width: 99vw;
+    max-width: 98vw;
+    padding: 0.7rem 0.2rem;
   }
   .ingresos-form {
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 0.3rem;
   }
   .btn-add, .btn-clear {
     width: 100%;
-    max-width: unset;
-    min-width: unset;
   }
 }
