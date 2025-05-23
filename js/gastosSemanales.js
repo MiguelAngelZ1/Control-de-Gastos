@@ -43,18 +43,63 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   window.agregarGastoSemana = function(idx) {
-    const descripcion = prompt('Descripción del gasto:');
-    if (!descripcion) return;
-    const montoRaw = prompt('Monto:');
-    if (!montoRaw) return;
-    const monto = parseFloat(montoRaw.replace(/\$/g, '').replace(/\./g, '').replace(/,/g, '.'));
-    if (isNaN(monto) || monto <= 0) return alert('Monto inválido');
-    const fecha = new Date().toISOString().slice(0,10);
-    gastosSem[idx] = gastosSem[idx] || [];
-    gastosSem[idx].push({ descripcion, monto, fecha });
-    localStorage.setItem('gastosSemanales', JSON.stringify(gastosSem));
-    renderSemanas();
+    // Modal para descripción
+    showModalPrompt('Descripción del gasto:', '', function(descripcion) {
+      if (!descripcion) return;
+      showModalPrompt('Monto:', '', function(montoRaw) {
+        if (!montoRaw) return;
+        const monto = parseFloat(montoRaw.replace(/\$/g, '').replace(/\./g, '').replace(/,/g, '.'));
+        if (isNaN(monto) || monto <= 0) return showModalAlert('Monto inválido', 'error');
+        const fecha = new Date().toISOString().slice(0,10);
+        gastosSem[idx] = gastosSem[idx] || [];
+        gastosSem[idx].push({ descripcion, monto, fecha });
+        localStorage.setItem('gastosSemanales', JSON.stringify(gastosSem));
+        renderSemanas();
+        showModalAlert('Gasto semanal agregado correctamente', 'success');
+      });
+    });
   };
+
+  // MODAL tipo prompt reutilizable
+  function showModalPrompt(label, value, callback) {
+    let modal = document.getElementById('modalPrompt');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'modalPrompt';
+      modal.className = 'modal';
+      modal.innerHTML = `
+        <div class="modal-content">
+          <h2 id="modalPromptTitle">Nuevo dato</h2>
+          <label id="modalPromptLabel"></label>
+          <input type="text" id="modalPromptInput" class="moneda" />
+          <div style="text-align:right; margin-top:1.2rem;">
+            <button class="btn btn-add" id="btnAceptarModalPrompt">Aceptar</button>
+            <button class="btn btn-clear" id="btnCancelarModalPrompt">Cancelar</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    }
+    document.getElementById('modalPromptLabel').innerText = label;
+    const input = document.getElementById('modalPromptInput');
+    input.value = value || '';
+    modal.style.display = 'flex';
+    input.focus();
+    document.getElementById('btnAceptarModalPrompt').onclick = () => {
+      modal.style.display = 'none';
+      callback(input.value);
+    };
+    document.getElementById('btnCancelarModalPrompt').onclick = () => {
+      modal.style.display = 'none';
+      callback(null);
+    };
+    modal.onclick = function(event) {
+      if (event.target === modal) {
+        modal.style.display = 'none';
+        callback(null);
+      }
+    };
+  }
 
   renderSemanas();
 });

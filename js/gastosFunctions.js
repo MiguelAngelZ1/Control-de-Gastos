@@ -49,11 +49,14 @@ document.addEventListener('DOMContentLoaded', function () {
   };
 
   window.borrarGastoFijo = function(idx) {
-    if (confirm('¿Seguro que deseas borrar este gasto fijo?')) {
-      gastosFijos.splice(idx, 1);
-      localStorage.setItem('gastosFijos', JSON.stringify(gastosFijos));
-      renderTabla();
-    }
+    showModalConfirm('¿Seguro que deseas borrar este gasto fijo?', function(confirmado) {
+      if (confirmado) {
+        gastosFijos.splice(idx, 1);
+        localStorage.setItem('gastosFijos', JSON.stringify(gastosFijos));
+        renderTabla();
+        showModalAlert('Gasto fijo eliminado', 'success');
+      }
+    });
   };
 
   form.onsubmit = function(e) {
@@ -74,6 +77,43 @@ document.addEventListener('DOMContentLoaded', function () {
     form.reset();
     document.getElementById('modalGastoFijo').style.display = 'none';
   };
+
+  // MODAL de confirmación reutilizable
+  function showModalConfirm(mensaje, callback) {
+    let modal = document.getElementById('modalConfirm');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'modalConfirm';
+      modal.className = 'modal';
+      modal.innerHTML = `
+        <div class="modal-content">
+          <h2>Confirmar</h2>
+          <p id="modalConfirmMsg"></p>
+          <div style="text-align:right; margin-top:1.2rem;">
+            <button class="btn btn-add" id="btnAceptarModalConfirm">Sí</button>
+            <button class="btn btn-clear" id="btnCancelarModalConfirm">No</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    }
+    document.getElementById('modalConfirmMsg').innerText = mensaje;
+    modal.style.display = 'flex';
+    document.getElementById('btnAceptarModalConfirm').onclick = () => {
+      modal.style.display = 'none';
+      callback(true);
+    };
+    document.getElementById('btnCancelarModalConfirm').onclick = () => {
+      modal.style.display = 'none';
+      callback(false);
+    };
+    modal.onclick = function(event) {
+      if (event.target === modal) {
+        modal.style.display = 'none';
+        callback(false);
+      }
+    };
+  }
 
   renderTabla();
 });

@@ -53,3 +53,31 @@ document.addEventListener('DOMContentLoaded', function () {
   // Llamada a updateDashboard() al cargar la página.
   updateDashboard();
 });
+
+// MODAL de alerta reutilizable
+function showModalAlert(mensaje, tipo = 'info') {
+  let modal = document.getElementById('modalAlert');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'modalAlert';
+    modal.className = 'modal';
+    modal.innerHTML = `
+      <div class="modal-content" id="modalAlertContent">
+        <h2 id="modalAlertTitle"></h2>
+        <p id="modalAlertMsg"></p>
+        <button class="btn btn-add" id="btnCerrarModalAlert">Aceptar</button>
+      </div>
+    `;
+    document.body.appendChild(modal);
+  }
+  document.getElementById('modalAlertTitle').innerText = tipo === 'error' ? 'Error' : (tipo === 'success' ? 'Éxito' : 'Aviso');
+  document.getElementById('modalAlertMsg').innerText = mensaje;
+  modal.style.display = 'flex';
+  document.getElementById('btnCerrarModalAlert').onclick = () => {
+    modal.style.display = 'none';
+  };
+  // Cierra modal al hacer click fuera
+  modal.onclick = function(event) {
+    if (event.target === modal) modal.style.display = 'none';
+  };
+}

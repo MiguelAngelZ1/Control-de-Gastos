@@ -147,7 +147,7 @@ a:hover {
   font-weight: 500;
   cursor: pointer;
   transition: background 0.2s, box-shadow 0.2s;
-  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.08);
+  box-shadow: 0 2px 8px rgba(59,130,246,0.08);
 }
 
 .btn:hover, .btn:focus {
@@ -279,6 +279,150 @@ a:hover {
 
 @media (max-width: 600px) {
   .modal-content {
+    padding: 1.2rem 0.7rem 1rem 0.7rem;
+    max-width: 98vw;
+  }
+}
+
+/* Estilos para modales personalizados (alert y prompt) */
+#modalAlert, #modalPrompt {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  left: 0; top: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.25);
+  justify-content: center;
+  align-items: center;
+}
+#modalAlert .modal-content, #modalPrompt .modal-content {
+  background: #fff;
+  padding: 2.2rem 2.2rem 1.5rem 2.2rem;
+  border-radius: 18px;
+  max-width: 400px;
+  margin: 10vh auto;
+  box-shadow: 0 8px 32px rgba(59,130,246,0.18);
+  position: relative;
+  border: 1.5px solid #e0e7ef;
+  animation: modalIn 0.25s cubic-bezier(.4,1.7,.6,.97);
+  text-align: center;
+}
+#modalAlert h2, #modalPrompt h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #2563eb;
+  margin-bottom: 0.7rem;
+}
+#modalAlert p, #modalPrompt label {
+  color: #222;
+  font-size: 1.08rem;
+  margin-bottom: 1.1rem;
+}
+#modalPrompt input[type="text"] {
+  width: 100%;
+  padding: 0.55rem 0.9rem;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 7px;
+  font-size: 1.05rem;
+  margin-bottom: 0.7rem;
+  background: #f8fafc;
+  transition: border 0.2s;
+  box-shadow: 0 1px 4px rgba(59,130,246,0.04);
+}
+#modalPrompt input[type="text"]:focus {
+  border: 1.5px solid #3b82f6;
+  outline: none;
+  background: #fff;
+}
+#modalAlert .btn, #modalPrompt .btn {
+  min-width: 110px;
+  font-size: 1.05rem;
+  padding: 0.5rem 1.1rem;
+  margin: 0.2rem 0.3rem 0.2rem 0;
+  border-radius: 7px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(59,130,246,0.08);
+  transition: background 0.18s, transform 0.18s;
+}
+#modalAlert .btn-add, #modalPrompt .btn-add {
+  background: #22c55e;
+}
+#modalAlert .btn-add:hover, #modalPrompt .btn-add:hover {
+  background: #16a34a;
+  transform: translateY(-2px) scale(1.03);
+}
+#modalAlert .btn-clear, #modalPrompt .btn-clear {
+  background: #f87171;
+}
+#modalAlert .btn-clear:hover, #modalPrompt .btn-clear:hover {
+  background: #dc2626;
+  transform: translateY(-2px) scale(1.03);
+}
+@media (max-width: 600px) {
+  #modalAlert .modal-content, #modalPrompt .modal-content {
+    padding: 1.2rem 0.7rem 1rem 0.7rem;
+    max-width: 98vw;
+  }
+}
+
+/* Modal de confirmación personalizado */
+#modalConfirm {
+  display: none;
+  position: fixed;
+  z-index: 2100;
+  left: 0; top: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.25);
+  justify-content: center;
+  align-items: center;
+}
+#modalConfirm .modal-content {
+  background: #fff;
+  padding: 2.2rem 2.2rem 1.5rem 2.2rem;
+  border-radius: 18px;
+  max-width: 400px;
+  margin: 10vh auto;
+  box-shadow: 0 8px 32px rgba(59,130,246,0.18);
+  position: relative;
+  border: 1.5px solid #e0e7ef;
+  animation: modalIn 0.25s cubic-bezier(.4,1.7,.6,.97);
+  text-align: center;
+}
+#modalConfirm h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #f87171;
+  margin-bottom: 0.7rem;
+}
+#modalConfirm p {
+  color: #222;
+  font-size: 1.08rem;
+  margin-bottom: 1.1rem;
+}
+#modalConfirm .btn {
+  min-width: 110px;
+  font-size: 1.05rem;
+  padding: 0.5rem 1.1rem;
+  margin: 0.2rem 0.3rem 0.2rem 0;
+  border-radius: 7px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(59,130,246,0.08);
+  transition: background 0.18s, transform 0.18s;
+}
+#modalConfirm .btn-add {
+  background: #22c55e;
+}
+#modalConfirm .btn-add:hover {
+  background: #16a34a;
+  transform: translateY(-2px) scale(1.03);
+}
+#modalConfirm .btn-clear {
+  background: #f87171;
+}
+#modalConfirm .btn-clear:hover {
+  background: #dc2626;
+  transform: translateY(-2px) scale(1.03);
+}
+@media (max-width: 600px) {
+  #modalConfirm .modal-content {
     padding: 1.2rem 0.7rem 1rem 0.7rem;
     max-width: 98vw;
   }

@@ -84,8 +84,9 @@ document.getElementById('btnAgregarIngreso').addEventListener('click', function(
     localStorage.setItem('ingresoTotal', ingresoTotalAcumulado);
     inputElement.value = "";
     actualizarResumen();
+    showModalAlert("Ingreso agregado correctamente", "success");
   } else {
-    alert("Ingrese un monto válido mayor a 0");
+    showModalAlert("Ingrese un monto válido mayor a 0", "error");
   }
 });
 
@@ -97,6 +98,7 @@ document.getElementById('btnLimpiarIngreso').addEventListener('click', function(
   ingresoTotalAcumulado = 0;
   localStorage.setItem('ingresoTotal', ingresoTotalAcumulado);
   actualizarResumen();
+  showModalAlert("Ingreso total reiniciado a cero", "info");
 });
 
 // Actualiza el resumen al cargar la página.
