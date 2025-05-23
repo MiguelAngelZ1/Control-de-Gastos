@@ -89,10 +89,10 @@ a:hover {
   align-items: center;
   justify-content: center;
   gap: 2.5rem;
-  max-width: 900px;
+  max-width: 1100px;
   width: 100%;
-  margin: 2.5rem auto 0 auto;
-  padding: 1.5rem 1rem;
+  margin: 3.5rem auto 0 auto;
+  padding: 2.5rem 1.5rem;
   box-sizing: border-box;
 }
 
@@ -112,8 +112,8 @@ a:hover {
 .ingresos-card,
 .resumen-card {
   width: 100%;
-  max-width: 420px;
-  min-width: 260px;
+  max-width: 480px;
+  min-width: 320px;
   margin: 0 auto;
 }
 
@@ -121,7 +121,7 @@ a:hover {
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  margin-top: 1.5rem;
+  margin-top: 2.5rem;
 }
 
 .resumen-card {
@@ -377,8 +377,8 @@ a:hover {
 @media (max-width: 900px) {
   .dashboard-container {
     max-width: 100vw;
-    padding: 1rem 0.5rem;
-    gap: 1.5rem;
+    padding: 1.5rem 0.5rem;
+    gap: 2rem;
   }
   .ingresos-card,
   .resumen-card {
@@ -388,12 +388,12 @@ a:hover {
 
 @media (max-width: 600px) {
   .dashboard-container {
-    gap: 1rem;
-    margin-top: 1rem;
+    gap: 1.2rem;
+    margin-top: 1.2rem;
   }
   .ingresos-card,
   .resumen-card {
-    padding: 0.5rem;
+    padding: 0.7rem;
     min-width: unset;
   }
 }
