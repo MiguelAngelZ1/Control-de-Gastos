@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (confirmado) {
         // Eliminar en backend si existe
         const gasto = gastosFijos[idx];
-        fetch('http://localhost:3000/api/gastos-fijos', {
+        fetch(`${API_BASE_URL}/gastos-fijos`, {
           method: 'DELETE',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ descripcion: gasto.descripcion, monto: gasto.monto, estado: gasto.estado })

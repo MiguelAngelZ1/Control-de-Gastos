@@ -1,7 +1,6 @@
-
-
 .gastos-section {
   margin-bottom: 2rem;
+  width: 100%;
 }
 
 .gastos-form {
@@ -10,6 +9,10 @@
   flex-wrap: wrap;
   align-items: center;
   margin-bottom: 1.5rem;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(59,130,246,0.06);
+  padding: 1.2rem 0.7rem;
 }
 
 .gasto-input {
@@ -17,6 +20,16 @@
   min-width: 120px;
 }
 
+@media (max-width: 600px) {
+  .gastos-form {
+    padding: 0.7rem 0.2rem;
+    box-shadow: none;
+    border-radius: 0;
+  }
+}
+
 .btn-add, .btn-clear {
-  min-width: 140px;
+  min-width: 120px;
+  font-size: 1.05rem;
+  border-radius: 8px;
 }

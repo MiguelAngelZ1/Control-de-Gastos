@@ -819,3 +819,84 @@ a:hover {
   }
 }
 /* --- FIN DE MEJORAS --- */
+
+/* --- MEJORAS DE RESPONSIVIDAD Y DISEÑO PROFESIONAL --- */
+
+/* Tablas responsivas */
+.tabla-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(59,130,246,0.06);
+  background: #fff;
+}
+
+.tabla-gastos {
+  min-width: 520px;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background: #fff;
+}
+
+@media (max-width: 600px) {
+  .tabla-gastos {
+    min-width: 420px;
+    font-size: 0.98rem;
+  }
+  .tabla-responsive {
+    box-shadow: none;
+    border-radius: 0;
+  }
+}
+
+/* Mejorar separación de secciones */
+.section-title {
+  margin-top: 2rem;
+  margin-bottom: 1.2rem;
+  font-size: 1.35rem;
+  color: #2563eb;
+  font-weight: 700;
+}
+
+/* Mejorar botones principales */
+.btn, .btn-add, .btn-clear, .btn-nav-main {
+  box-shadow: 0 2px 8px rgba(59,130,246,0.10);
+  border-radius: 8px;
+  font-size: 1.08rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: background 0.18s, transform 0.18s;
+}
+
+.btn:active, .btn-add:active, .btn-clear:active, .btn-nav-main:active {
+  transform: scale(0.97);
+}
+
+/* Mejorar formularios */
+.form-group {
+  margin-bottom: 1.1rem;
+}
+
+input[type="text"], select {
+  border-radius: 7px;
+  border: 1.5px solid #cbd5e1;
+  padding: 0.55rem 0.9rem;
+  font-size: 1.05rem;
+  background: #f8fafc;
+  transition: border 0.2s;
+  box-shadow: 0 1px 4px rgba(59,130,246,0.04);
+}
+input[type="text"]:focus, select:focus {
+  border: 1.5px solid #3b82f6;
+  outline: none;
+  background: #fff;
+}
+
+/* Mejorar feedback visual de botones */
+.btn[disabled], .btn-add[disabled], .btn-clear[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

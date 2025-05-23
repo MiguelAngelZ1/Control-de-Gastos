@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       const fecha = new Date().toISOString().slice(0,10);
       // Guardar en backend
-      fetch('http://localhost:3000/api/semanas', {
+      fetch(`${API_BASE_URL}/semanas`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ semana: idx+1, descripcion, monto: montoNum, fecha })
