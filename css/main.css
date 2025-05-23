@@ -502,10 +502,11 @@ a:hover {
 .semana-bar-bg {
   background: #e5e7eb;
   border-radius: 8px;
-  height: 22px;
+  height: 28px;
   width: 100%;
   overflow: hidden;
   margin-bottom: 0.5rem;
+  position: relative;
 }
 .semana-bar-fill {
   height: 100%;
@@ -513,20 +514,37 @@ a:hover {
   transition: width 0.4s;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  font-weight: 600;
+  justify-content: center;
+  font-weight: 700;
   color: #fff;
-  padding-right: 0.7rem;
-  font-size: 1rem;
+  font-size: 1.08rem;
+  position: absolute;
+  left: 0; top: 0;
+  z-index: 2;
 }
 .semana-bar-fill.green {
-  background: #22c55e;
+  background: linear-gradient(90deg, #22c55e 60%, #3b82f6 100%);
+}
+.semana-bar-fill.orange {
+  background: linear-gradient(90deg, #fbbf24 60%, #f59e42 100%);
 }
 .semana-bar-fill.yellow {
-  background: #fbbf24;
+  background: linear-gradient(90deg, #fbbf24 60%, #f87171 100%);
 }
 .semana-bar-fill.red {
-  background: #f87171;
+  background: linear-gradient(90deg, #f87171 60%, #dc2626 100%);
+}
+.presupuesto-barra {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 1.08rem;
+  font-weight: 700;
+  text-shadow: 0 1px 4px rgba(30,41,59,0.10);
+  z-index: 3;
+  pointer-events: none;
 }
 
 /* Footer y redes sociales */
