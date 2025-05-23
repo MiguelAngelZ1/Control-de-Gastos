@@ -1,4 +1,3 @@
-// Contenido de gastosFunctions.js (se completará con contenido real luego)
 document.addEventListener('DOMContentLoaded', function () {
   // Formateo de moneda
   document.querySelectorAll('.moneda').forEach(function (input) {
@@ -207,12 +206,12 @@ document.addEventListener('DOMContentLoaded', function () {
   renderTabla();
 });
 
-// Asegura que API_BASE_URL esté disponible globalmente
+// Asegura que API_BASE_URL esté disponible globalmente sin redeclarar
 if (typeof API_BASE_URL === 'undefined') {
   if (window.API_BASE_URL) {
-    var API_BASE_URL = window.API_BASE_URL;
+    API_BASE_URL = window.API_BASE_URL;
   } else if (window.parent && window.parent.API_BASE_URL) {
-    var API_BASE_URL = window.parent.API_BASE_URL;
+    API_BASE_URL = window.parent.API_BASE_URL;
   } else {
     throw new Error('API_BASE_URL no está definida. Asegúrate de incluir config.js antes que gastosFunctions.js');
   }
