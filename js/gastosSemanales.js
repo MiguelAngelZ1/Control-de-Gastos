@@ -69,11 +69,21 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
       }
       const fecha = new Date().toISOString().slice(0,10);
-      gastosSem[idx] = gastosSem[idx] || [];
-      gastosSem[idx].push({ descripcion, monto: montoNum, fecha });
-      localStorage.setItem('gastosSemanales', JSON.stringify(gastosSem));
-      renderSemanas();
-      showModalAlert('Gasto semanal agregado correctamente', 'success');
+      // Guardar en backend
+      fetch('http://localhost:3000/api/semanas', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ semana: idx+1, descripcion, monto: montoNum, fecha })
+      })
+      .then(res => res.json())
+      .then(gasto => {
+        gastosSem[idx] = gastosSem[idx] || [];
+        gastosSem[idx].push({ descripcion: gasto.descripcion, monto: gasto.monto, fecha: gasto.fecha });
+        localStorage.setItem('gastosSemanales', JSON.stringify(gastosSem));
+        renderSemanas();
+        showModalAlert('Gasto semanal agregado correctamente', 'success');
+      })
+      .catch(() => showModalAlert('No se pudo guardar el gasto semanal en el backend.', 'error'));
     });
   };
 
@@ -176,13 +186,38 @@ document.addEventListener('DOMContentLoaded', function () {
   window.eliminarGastoSemana = function(semanaIdx, gastoIdx) {
     showModalConfirm('¿Eliminar este gasto de la semana?', function(ok) {
       if (ok) {
-        gastosSem[semanaIdx].splice(gastoIdx, 1);
-        localStorage.setItem('gastosSemanales', JSON.stringify(gastosSem));
-        renderSemanas();
-        showModalAlert('Gasto eliminado', 'success');
+        const gasto = gastosSem[semanaIdx][gastoIdx];
+        // Eliminar en backend
+        fetch('http://localhost:3000/api/semanas', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ semana: semanaIdx+1, descripcion: gasto.descripcion, monto: gasto.monto, fecha: gasto.fecha })
+        })
+        .then(() => {
+          gastosSem[semanaIdx].splice(gastoIdx, 1);
+          localStorage.setItem('gastosSemanales', JSON.stringify(gastosSem));
+          renderSemanas();
+          showModalAlert('Gasto eliminado', 'success');
+        })
+        .catch(() => showModalAlert('No se pudo eliminar el gasto semanal en el backend.', 'error'));
       }
     });
   };
+
+  // Sincronizar gastos semanales con backend al cargar la página
+  fetch('http://localhost:3000/api/semanas')
+    .then(res => res.json())
+    .then(data => {
+      // Agrupar por semana (1-4)
+      gastosSem = [[],[],[],[]];
+      data.forEach(g => {
+        const idx = (g.semana || 1) - 1;
+        if (gastosSem[idx]) gastosSem[idx].push({ descripcion: g.descripcion, monto: g.monto, fecha: g.fecha });
+      });
+      localStorage.setItem('gastosSemanales', JSON.stringify(gastosSem));
+      renderSemanas();
+    })
+    .catch(() => {/* Si falla, usar localStorage */});
 
   // Formato de moneda en todos los inputs de modales al mostrarse
   function aplicarFormatoMonedaModales() {

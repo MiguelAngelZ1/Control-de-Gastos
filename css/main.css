@@ -116,14 +116,41 @@ a:hover {
 .site-main {
   flex: 1;
   width: 100%;
-  max-width: 700px;
-  margin: 2rem auto 0 auto;
+  max-width: 480px;
+  margin: 1.2rem auto 0 auto;
   background: #fff;
   border-radius: 14px;
   box-shadow: 0 4px 24px rgba(59, 130, 246, 0.08);
-  padding: 2rem 2.5rem 2.5rem 2.5rem;
+  padding: 1.2rem 0.7rem 1.2rem 0.7rem;
   overflow-x: hidden;
   overflow-y: visible;
+}
+
+.ingresos-card {
+  padding: 1.2rem 0.7rem 1.2rem 0.7rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(59,130,246,0.06);
+  background: #fff;
+  margin-bottom: 1.2rem;
+}
+
+.resumen-section {
+  margin-top: 1.2rem;
+  margin-bottom: 0.7rem;
+}
+
+.resumen-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.resumen-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 0.2rem;
+  font-size: 1.08rem;
 }
 
 .section-title {
@@ -731,3 +758,64 @@ a:hover {
 .historial-desc {
   color: #222;
 }
+
+/* --- MEJORAS DE COMPACIDAD Y RESPONSIVIDAD --- */
+.site-main {
+  max-width: 480px;
+  padding: 1.2rem 0.7rem 1.2rem 0.7rem;
+  margin: 1.2rem auto 0 auto;
+}
+.ingresos-card {
+  padding: 1.2rem 0.7rem 1.2rem 0.7rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(59,130,246,0.06);
+  background: #fff;
+  margin-bottom: 1.2rem;
+}
+.resumen-section {
+  margin-top: 1.2rem;
+  margin-bottom: 0.7rem;
+}
+.resumen-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.resumen-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 0.2rem;
+  font-size: 1.08rem;
+}
+@media (min-width: 600px) {
+  .site-main {
+    max-width: 600px;
+    padding: 2rem 2.5rem 2.5rem 2.5rem;
+  }
+  .ingresos-card {
+    padding: 2rem 2.5rem 2rem 2.5rem;
+  }
+  .resumen-grid {
+    flex-direction: row;
+    gap: 1.5rem;
+  }
+  .resumen-item {
+    min-width: 180px;
+    font-size: 1.13rem;
+  }
+}
+/* Eliminar espacios vacíos en móviles */
+@media (max-width: 480px) {
+  .site-main {
+    margin: 0.5rem auto 0 auto;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .ingresos-card {
+    margin-bottom: 0.7rem;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+/* --- FIN DE MEJORAS --- */

@@ -71,20 +71,27 @@ function actualizarResumen() {
  */
 document.getElementById('btnAgregarIngreso').addEventListener('click', function() {
   const inputElement = document.getElementById('ingresoInput');
-  
-  // Normalización: elimina "$", elimina TODOS los puntos (separadores de miles) y reemplaza la coma por punto.
   const rawValue = inputElement.value
     .replace(/\$/g, '')
     .replace(/\./g, '')
     .replace(/,/g, '.');
   const nuevoIngreso = parseFloat(rawValue) || 0;
-  
   if (nuevoIngreso > 0) {
-    ingresoTotalAcumulado += nuevoIngreso;
-    localStorage.setItem('ingresoTotal', ingresoTotalAcumulado);
-    inputElement.value = "";
-    actualizarResumen();
-    showModalAlert("Ingreso agregado correctamente", "success");
+    // Guardar en backend
+    fetch('http://localhost:3000/api/ingresos', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ monto: nuevoIngreso, descripcion: 'Ingreso manual' })
+    })
+    .then(res => res.json())
+    .then(() => {
+      ingresoTotalAcumulado += nuevoIngreso;
+      localStorage.setItem('ingresoTotal', ingresoTotalAcumulado);
+      inputElement.value = "";
+      actualizarResumen();
+      showModalAlert("Ingreso agregado correctamente", "success");
+    })
+    .catch(() => showModalAlert("No se pudo guardar el ingreso en el backend.", "error"));
   } else {
     showModalAlert("Ingrese un monto válido mayor a 0", "error");
   }
@@ -95,11 +102,27 @@ document.getElementById('btnAgregarIngreso').addEventListener('click', function(
  *   Reinicia el ingreso total acumulado a cero, lo actualiza en localStorage y actualiza el resumen financiero.
  */
 document.getElementById('btnLimpiarIngreso').addEventListener('click', function() {
-  ingresoTotalAcumulado = 0;
-  localStorage.setItem('ingresoTotal', ingresoTotalAcumulado);
-  actualizarResumen();
-  showModalAlert("Ingreso total reiniciado a cero", "info");
+  // Eliminar todos los ingresos en el backend
+  fetch('http://localhost:3000/api/ingresos', { method: 'DELETE' })
+    .then(() => {
+      ingresoTotalAcumulado = 0;
+      localStorage.setItem('ingresoTotal', ingresoTotalAcumulado);
+      actualizarResumen();
+      showModalAlert("Ingreso total reiniciado a cero", "info");
+    })
+    .catch(() => showModalAlert("No se pudo reiniciar el ingreso en el backend.", "error"));
 });
+
+// Al cargar la página, obtener el ingreso total desde el backend
+fetch('http://localhost:3000/api/ingresos')
+  .then(res => res.json())
+  .then(data => {
+    // Sumar todos los ingresos registrados en la base de datos
+    ingresoTotalAcumulado = data.reduce((acc, ingreso) => acc + parseFloat(ingreso.monto), 0);
+    localStorage.setItem('ingresoTotal', ingresoTotalAcumulado);
+    actualizarResumen();
+  })
+  .catch(() => {/* Si falla, usar localStorage */});
 
 // Actualiza el resumen al cargar la página.
 actualizarResumen();

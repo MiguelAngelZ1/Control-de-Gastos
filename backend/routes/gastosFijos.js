@@ -26,4 +26,15 @@ router.post('/', async (req, res) => {
   }
 });
 
+// Eliminar un gasto fijo por descripción, monto y estado (búsqueda simple)
+router.delete('/', async (req, res) => {
+  const { descripcion, monto, estado } = req.body;
+  try {
+    await pool.query('DELETE FROM gastos_fijos WHERE descripcion = $1 AND monto = $2 AND estado = $3', [descripcion, monto, estado]);
+    res.json({ message: 'Gasto fijo eliminado' });
+  } catch (err) {
+    res.status(500).json({ error: 'Error al eliminar gasto fijo' });
+  }
+});
+
 module.exports = router;

@@ -131,9 +131,20 @@ function agregarBotonReiniciar() {
   btn.onclick = function() {
     showModalConfirm('¿Seguro que deseas borrar todos los datos? Esta acción no se puede deshacer.', function(ok) {
       if (ok) {
-        localStorage.clear();
-        // Forzar recarga total para limpiar todos los datos y el estado de la UI
-        window.location.reload();
+        // Llamar primero al backend para eliminar datos en la base de datos
+        fetch('http://localhost:3000/api/reiniciar-todos', {
+          method: 'DELETE',
+        })
+        .then(response => {
+          if (!response.ok) throw new Error('Error al reiniciar datos en el backend');
+          // Si el backend responde OK, limpiar localStorage y recargar
+          localStorage.clear();
+          showModalAlert('Todos los datos han sido eliminados correctamente.', 'success');
+          setTimeout(() => window.location.reload(), 1200);
+        })
+        .catch(err => {
+          showModalAlert('No se pudo reiniciar los datos en el backend. Intenta nuevamente.', 'error');
+        });
       }
     });
   };

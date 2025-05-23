@@ -25,9 +25,11 @@ app.get('/', (req, res) => {
 const ingresosRoutes = require('./routes/ingresos');
 const gastosFijosRoutes = require('./routes/gastosFijos');
 const semanasRoutes = require('./routes/semanas');
+const reiniciarRoutes = require('./routes/reiniciar'); // Ruta para reinicio total
 app.use('/api/ingresos', ingresosRoutes);
 app.use('/api/gastos-fijos', gastosFijosRoutes);
 app.use('/api/semanas', semanasRoutes);
+app.use('/api/reiniciar-todos', reiniciarRoutes); // Usar la nueva ruta
 
 app.listen(PORT, HOST, () => {
   console.log(`Servidor backend escuchando en el puerto ${PORT}`);

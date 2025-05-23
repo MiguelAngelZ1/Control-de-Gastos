@@ -26,6 +26,16 @@ router.post('/', async (req, res) => {
   }
 });
 
+// Eliminar todos los ingresos
+router.delete('/', async (req, res) => {
+  try {
+    await pool.query('DELETE FROM ingresos');
+    res.json({ message: 'Todos los ingresos eliminados' });
+  } catch (err) {
+    res.status(500).json({ error: 'Error al eliminar ingresos' });
+  }
+});
+
 module.exports = router;
 
 // Aquí se implementarán las rutas de ingresos

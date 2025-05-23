@@ -26,4 +26,25 @@ router.post('/', async (req, res) => {
   }
 });
 
+// Eliminar todos los gastos semanales
+router.delete('/', async (req, res) => {
+  try {
+    await pool.query('DELETE FROM gastos_semanales');
+    res.json({ message: 'Todos los gastos semanales eliminados' });
+  } catch (err) {
+    res.status(500).json({ error: 'Error al eliminar gastos semanales' });
+  }
+});
+
+// Eliminar un gasto semanal por semana, descripción, monto y fecha
+router.delete('/', async (req, res) => {
+  const { semana, descripcion, monto, fecha } = req.body;
+  try {
+    await pool.query('DELETE FROM gastos_semanales WHERE semana = $1 AND descripcion = $2 AND monto = $3 AND fecha = $4', [semana, descripcion, monto, fecha]);
+    res.json({ message: 'Gasto semanal eliminado' });
+  } catch (err) {
+    res.status(500).json({ error: 'Error al eliminar gasto semanal' });
+  }
+});
+
 module.exports = router;

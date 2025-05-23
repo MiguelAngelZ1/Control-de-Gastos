@@ -51,10 +51,21 @@ document.addEventListener('DOMContentLoaded', function () {
   window.borrarGastoFijo = function(idx) {
     showModalConfirm('¿Seguro que deseas borrar este gasto fijo?', function(confirmado) {
       if (confirmado) {
-        gastosFijos.splice(idx, 1);
-        localStorage.setItem('gastosFijos', JSON.stringify(gastosFijos));
-        renderTabla();
-        showModalAlert('Gasto fijo eliminado', 'success');
+        // Eliminar en backend si existe
+        const gasto = gastosFijos[idx];
+        fetch('http://localhost:3000/api/gastos-fijos', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ descripcion: gasto.descripcion, monto: gasto.monto, estado: gasto.estado })
+        })
+        .then(() => {
+          gastosFijos.splice(idx, 1);
+          localStorage.setItem('gastosFijos', JSON.stringify(gastosFijos));
+          renderTabla();
+          showModalAlert('Gasto fijo eliminado', 'success');
+          if (typeof window.updateDashboard === 'function') window.updateDashboard();
+        })
+        .catch(() => showModalAlert('No se pudo eliminar el gasto fijo en el backend.', 'error'));
       }
     });
   };
@@ -66,17 +77,73 @@ document.addEventListener('DOMContentLoaded', function () {
     const estado = document.getElementById('estadoFijo').value;
     if (!descripcion || !monto || !estado) return;
     const idx = form.getAttribute('data-edit');
+    // Si es edición, solo local, si es nuevo, enviar al backend
     if (idx !== null) {
       gastosFijos[idx] = { descripcion, monto: parseFloat(monto), estado };
       form.removeAttribute('data-edit');
+      // Aquí podrías agregar lógica para actualizar en backend si lo deseas
     } else {
-      gastosFijos.push({ descripcion, monto: parseFloat(monto), estado });
+      // Guardar en backend
+      fetch('http://localhost:3000/api/gastos-fijos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ descripcion, monto: parseFloat(monto), observaciones: '', estado })
+      })
+      .then(res => res.json())
+      .then(gasto => {
+        gastosFijos.push({ descripcion: gasto.descripcion, monto: gasto.monto, estado: gasto.estado });
+        localStorage.setItem('gastosFijos', JSON.stringify(gastosFijos));
+        renderTabla();
+        form.reset();
+        document.getElementById('modalGastoFijo').style.display = 'none';
+        // Actualizar dashboard
+        if (typeof window.updateDashboard === 'function') window.updateDashboard();
+      })
+      .catch(() => showModalAlert('No se pudo guardar el gasto fijo en el backend.', 'error'));
+      return;
     }
     localStorage.setItem('gastosFijos', JSON.stringify(gastosFijos));
     renderTabla();
     form.reset();
     document.getElementById('modalGastoFijo').style.display = 'none';
+    if (typeof window.updateDashboard === 'function') window.updateDashboard();
   };
+
+  // Botón para limpiar solo la tabla de gastos fijos
+  let btnLimpiarFijos = document.getElementById('btnLimpiarGastosFijos');
+  if (!btnLimpiarFijos) {
+    btnLimpiarFijos = document.createElement('button');
+    btnLimpiarFijos.id = 'btnLimpiarGastosFijos';
+    btnLimpiarFijos.className = 'btn btn-clear';
+    btnLimpiarFijos.innerHTML = '<i class="fa-solid fa-eraser"></i> Limpiar Gastos Fijos';
+    tabla.parentElement.insertBefore(btnLimpiarFijos, tabla);
+  }
+  btnLimpiarFijos.onclick = function() {
+    showModalConfirm('¿Seguro que deseas borrar todos los gastos fijos?', function(confirmado) {
+      if (confirmado) {
+        // Llamar al backend para eliminar todos los gastos fijos
+        fetch('http://localhost:3000/api/gastos-fijos', { method: 'DELETE' })
+          .then(response => {
+            if (!response.ok) throw new Error('Error al limpiar gastos fijos en el backend');
+            gastosFijos = [];
+            localStorage.setItem('gastosFijos', '[]');
+            renderTabla();
+            showModalAlert('Todos los gastos fijos han sido eliminados.', 'success');
+          })
+          .catch(() => showModalAlert('No se pudo limpiar los gastos fijos en el backend.', 'error'));
+      }
+    });
+  };
+
+  // Sincronizar gastos fijos con backend al cargar la página
+  fetch('http://localhost:3000/api/gastos-fijos')
+    .then(res => res.json())
+    .then(data => {
+      gastosFijos = data.map(g => ({ descripcion: g.descripcion, monto: g.monto, estado: g.estado }));
+      localStorage.setItem('gastosFijos', JSON.stringify(gastosFijos));
+      renderTabla();
+    })
+    .catch(() => {/* Si falla, usar localStorage */});
 
   // MODAL de confirmación reutilizable
   function showModalConfirm(mensaje, callback) {
