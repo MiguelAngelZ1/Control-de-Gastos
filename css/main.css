@@ -453,7 +453,29 @@ a:hover {
 .tabla-gastos .btn {
   font-size: 0.95rem;
   padding: 0.3rem 0.7rem;
-  margin-right: 0.3rem;
+  margin-right: 0.2rem;
+  min-width: 36px;
+  width: 36px;
+  height: 36px;
+  justify-content: center;
+  border-radius: 50%;
+  box-shadow: 0 1px 4px rgba(59,130,246,0.04);
+}
+.tabla-gastos .btn i {
+  margin: 0;
+  font-size: 1.1rem;
+}
+.tabla-gastos .btn-add {
+  background: #22c55e;
+}
+.tabla-gastos .btn-clear {
+  background: #f87171;
+}
+.tabla-gastos .btn-add:hover {
+  background: #16a34a;
+}
+.tabla-gastos .btn-clear:hover {
+  background: #dc2626;
 }
 
 /* Iconos de estado */
@@ -542,4 +564,126 @@ a:hover {
 
 .footer-social a:active {
   color: #fff;
+}
+
+.saldo-disponible-semanal {
+  color: #2563eb;
+  font-weight: 600;
+  font-size: 1.08rem;
+  margin-left: 1rem;
+}
+.btn-presupuesto-semanal {
+  padding: 0.5rem 1.1rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  background: linear-gradient(90deg, #22c55e 70%, #3b82f6 100%);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(59,130,246,0.08);
+  border: none;
+  transition: background 0.18s, transform 0.18s;
+  margin-left: 0.5rem;
+}
+.btn-presupuesto-semanal:hover {
+  background: linear-gradient(90deg, #16a34a 70%, #2563eb 100%);
+  transform: translateY(-2px) scale(1.03);
+}
+.presupuesto-semana-info {
+  display: inline-block;
+  color: #3b82f6;
+  font-size: 0.98rem;
+  margin: 0.5rem 0 0.5rem 0.5rem;
+  font-weight: 500;
+}
+
+/* Nuevos estilos para mejoras */
+.input-error {
+  border: 2px solid #f87171 !important;
+  background: #fff0f0 !important;
+}
+.input-error-msg {
+  color: #f87171;
+  font-size: 0.98rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+  font-weight: 500;
+}
+.barra-progreso-bg {
+  width: 100%;
+  height: 18px;
+  background: #e5e7eb;
+  border-radius: 8px;
+  margin-bottom: 0.3rem;
+  overflow: hidden;
+}
+.barra-progreso-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #22c55e 60%, #3b82f6 100%);
+  border-radius: 8px;
+  transition: width 0.5s cubic-bezier(.4,1.7,.6,.97);
+}
+.barra-progreso-label {
+  font-size: 1rem;
+  color: #2563eb;
+  font-weight: 600;
+  margin-left: 0.5rem;
+}
+#barraProgresoDashboard {
+  margin-top: 1.2rem;
+  margin-bottom: 0.7rem;
+}
+#btnReiniciarDatos {
+  margin-left: 1.2rem;
+}
+#btnExportarCSV {
+  margin-left: 1.2rem;
+}
+#historialMovimientos {
+  margin: 2.5rem auto 1.5rem auto;
+  max-width: 600px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(30,41,59,0.08);
+  padding: 1.2rem 1.5rem;
+}
+#historialMovimientos h3 {
+  color: #2563eb;
+  font-size: 1.2rem;
+  margin-bottom: 0.7rem;
+}
+.historial-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.historial-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.7rem;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0.5rem 0;
+  font-size: 1.05rem;
+}
+.historial-list li:last-child {
+  border-bottom: none;
+}
+.historial-tipo.ingreso {
+  color: #22c55e;
+  font-weight: 700;
+}
+.historial-tipo.gasto {
+  color: #f87171;
+  font-weight: 700;
+}
+.historial-monto {
+  color: #2563eb;
+  font-weight: 600;
+}
+.historial-fecha {
+  color: #888;
+  font-size: 0.98em;
+}
+.historial-desc {
+  color: #222;
 }

@@ -87,7 +87,13 @@
     </section>
     <!-- Gastos semanales -->
     <section style="margin-top:2.5rem;">
-      <h2 class="section-title">Gastos Semanales</h2>
+      <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.7rem;">
+        <h2 class="section-title" style="margin-bottom:0;">Gastos Semanales</h2>
+        <button class="btn btn-add btn-presupuesto-semanal" id="btnPresupuestoSemanal" title="Cargar presupuesto semanal">
+          <i class="fa-solid fa-coins"></i> Cargar Presupuesto
+        </button>
+        <span id="saldoDisponibleSemanal" class="saldo-disponible-semanal"></span>
+      </div>
       <div id="gastosSemanalesContainer">
         <!-- Barras y controles semanales generados por JS -->
       </div>
