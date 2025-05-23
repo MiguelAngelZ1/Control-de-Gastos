@@ -10,8 +10,15 @@
 */
 
 // Asegura que API_BASE_URL esté disponible globalmente
-if (typeof API_BASE_URL === 'undefined' && window.API_BASE_URL) {
-  var API_BASE_URL = window.API_BASE_URL;
+if (typeof API_BASE_URL === 'undefined') {
+  if (window.API_BASE_URL) {
+    window.API_BASE_URL = window.API_BASE_URL;
+    var API_BASE_URL = window.API_BASE_URL;
+  } else if (window.parent && window.parent.API_BASE_URL) {
+    var API_BASE_URL = window.parent.API_BASE_URL;
+  } else {
+    throw new Error('API_BASE_URL no está definida. Asegúrate de incluir config.js antes que ingresos.js');
+  }
 }
 
 // Recupera el ingreso total almacenado en localStorage o usa 0 si no existe.
