@@ -9,19 +9,34 @@
       tomando en cuenta los gastos ya registrados.
 */
 
-// Asegura que API_BASE_URL esté disponible globalmente sin redeclarar
+// Asegura que API_BASE_URL esté disponible globalmente sin redundancia
 if (typeof API_BASE_URL === 'undefined') {
   if (window.API_BASE_URL) {
-    API_BASE_URL = window.API_BASE_URL;
+    window.API_BASE_URL = window.API_BASE_URL;
   } else if (window.parent && window.parent.API_BASE_URL) {
-    API_BASE_URL = window.parent.API_BASE_URL;
+    window.API_BASE_URL = window.parent.API_BASE_URL;
   } else {
     throw new Error('API_BASE_URL no está definida. Asegúrate de incluir config.js antes que ingresos.js');
   }
 }
 
-// Recupera el ingreso total almacenado en localStorage o usa 0 si no existe.
-let ingresoTotalAcumulado = parseFloat(localStorage.getItem('ingresoTotal')) || 0;
+// --- Sincronización total de ingresos con backend ---
+var ingresoTotalAcumulado = 0;
+
+function syncIngresosFromBackend() {
+  fetch(`${window.API_BASE_URL}/ingresos`)
+    .then(res => res.json())
+    .then(data => {
+      ingresoTotalAcumulado = data.reduce((acc, ingreso) => acc + parseFloat(ingreso.monto), 0);
+      localStorage.setItem('ingresoTotal', ingresoTotalAcumulado);
+      actualizarResumen();
+    })
+    .catch(() => {
+      // Si falla el backend, usar localStorage como respaldo
+      ingresoTotalAcumulado = parseFloat(localStorage.getItem('ingresoTotal')) || 0;
+      actualizarResumen();
+    });
+}
 
 /*
   Inicialización de Cleave.js para el input de ingreso (formatea la moneda).
@@ -88,18 +103,15 @@ document.getElementById('btnAgregarIngreso').addEventListener('click', function(
     .replace(/,/g, '.');
   const nuevoIngreso = parseFloat(rawValue) || 0;
   if (nuevoIngreso > 0) {
-    // Guardar en backend
-    fetch(`${API_BASE_URL}/ingresos`, {
+    fetch(`${window.API_BASE_URL}/ingresos`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ monto: nuevoIngreso, descripcion: 'Ingreso manual' })
     })
     .then(res => res.json())
     .then(() => {
-      ingresoTotalAcumulado += nuevoIngreso;
-      localStorage.setItem('ingresoTotal', ingresoTotalAcumulado);
+      syncIngresosFromBackend();
       inputElement.value = "";
-      actualizarResumen();
       showModalAlert("Ingreso agregado correctamente", "success");
     })
     .catch(() => showModalAlert("No se pudo guardar el ingreso en el backend.", "error"));
@@ -113,27 +125,16 @@ document.getElementById('btnAgregarIngreso').addEventListener('click', function(
  *   Reinicia el ingreso total acumulado a cero, lo actualiza en localStorage y actualiza el resumen financiero.
  */
 document.getElementById('btnLimpiarIngreso').addEventListener('click', function() {
-  // Eliminar todos los ingresos en el backend
-  fetch(`${API_BASE_URL}/ingresos`, { method: 'DELETE' })
+  fetch(`${window.API_BASE_URL}/ingresos`, { method: 'DELETE' })
     .then(() => {
-      ingresoTotalAcumulado = 0;
-      localStorage.setItem('ingresoTotal', ingresoTotalAcumulado);
-      actualizarResumen();
+      syncIngresosFromBackend();
       showModalAlert("Ingreso total reiniciado a cero", "info");
     })
     .catch(() => showModalAlert("No se pudo reiniciar el ingreso en el backend.", "error"));
 });
 
-// Al cargar la página, obtener el ingreso total desde el backend
-fetch(`${API_BASE_URL}/ingresos`)
-  .then(res => res.json())
-  .then(data => {
-    // Sumar todos los ingresos registrados en la base de datos
-    ingresoTotalAcumulado = data.reduce((acc, ingreso) => acc + parseFloat(ingreso.monto), 0);
-    localStorage.setItem('ingresoTotal', ingresoTotalAcumulado);
-    actualizarResumen();
-  })
-  .catch(() => {/* Si falla, usar localStorage */});
+// Al cargar la página, sincronizar ingresos desde backend
+syncIngresosFromBackend();
 
 // Actualiza el resumen al cargar la página.
 actualizarResumen();

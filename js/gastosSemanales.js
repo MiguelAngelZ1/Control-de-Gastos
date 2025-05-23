@@ -3,15 +3,38 @@ document.addEventListener('DOMContentLoaded', function () {
   const container = document.getElementById('gastosSemanalesContainer');
   if (!container) return;
 
-  // Asegura que API_BASE_URL esté disponible globalmente sin redeclarar
+  // Asegura que API_BASE_URL esté disponible globalmente sin redundancia
   if (typeof API_BASE_URL === 'undefined') {
     if (window.API_BASE_URL) {
-      API_BASE_URL = window.API_BASE_URL;
+      window.API_BASE_URL = window.API_BASE_URL;
     } else if (window.parent && window.parent.API_BASE_URL) {
-      API_BASE_URL = window.parent.API_BASE_URL;
+      window.API_BASE_URL = window.parent.API_BASE_URL;
     } else {
       throw new Error('API_BASE_URL no está definida. Asegúrate de incluir config.js antes que gastosSemanales.js');
     }
+  }
+
+  // --- Sincronización total de gastos semanales con backend ---
+  var gastosSem = [[],[],[],[]]; // Usar 'var' para evitar redeclaraciones
+
+  function syncGastosSemanalesFromBackend() {
+    fetch(`${window.API_BASE_URL}/semanas`)
+      .then(res => res.json())
+      .then(data => {
+        gastosSem = [[],[],[],[]];
+        data.forEach(g => {
+          const idx = (g.semana || 1) - 1;
+          if (gastosSem[idx]) gastosSem[idx].push({ descripcion: g.descripcion, monto: g.monto, fecha: g.fecha });
+        });
+        localStorage.setItem('gastosSemanales', JSON.stringify(gastosSem));
+        renderSemanas();
+      })
+      .catch(() => {
+        // Si falla el backend, usar localStorage como respaldo
+        const local = localStorage.getItem('gastosSemanales');
+        gastosSem = local ? JSON.parse(local) : [[],[],[],[]];
+        renderSemanas();
+      });
   }
 
   // Calcula el presupuesto restante después de gastos fijos
@@ -80,18 +103,14 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
       }
       const fecha = new Date().toISOString().slice(0,10);
-      // Guardar en backend
-      fetch(`${API_BASE_URL}/semanas`, {
+      fetch(`${window.API_BASE_URL}/semanas`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ semana: idx+1, descripcion, monto: montoNum, fecha })
       })
       .then(res => res.json())
       .then(gasto => {
-        gastosSem[idx] = gastosSem[idx] || [];
-        gastosSem[idx].push({ descripcion: gasto.descripcion, monto: gasto.monto, fecha: gasto.fecha });
-        localStorage.setItem('gastosSemanales', JSON.stringify(gastosSem));
-        renderSemanas();
+        syncGastosSemanalesFromBackend();
         showModalAlert('Gasto semanal agregado correctamente', 'success');
       })
       .catch(() => showModalAlert('No se pudo guardar el gasto semanal en el backend.', 'error'));
@@ -198,16 +217,13 @@ document.addEventListener('DOMContentLoaded', function () {
     showModalConfirm('¿Eliminar este gasto de la semana?', function(ok) {
       if (ok) {
         const gasto = gastosSem[semanaIdx][gastoIdx];
-        // Eliminar en backend
-        fetch(`${API_BASE_URL}/semanas`, {
+        fetch(`${window.API_BASE_URL}/semanas`, {
           method: 'DELETE',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ semana: semanaIdx+1, descripcion: gasto.descripcion, monto: gasto.monto, fecha: gasto.fecha })
         })
         .then(() => {
-          gastosSem[semanaIdx].splice(gastoIdx, 1);
-          localStorage.setItem('gastosSemanales', JSON.stringify(gastosSem));
-          renderSemanas();
+          syncGastosSemanalesFromBackend();
           showModalAlert('Gasto eliminado', 'success');
         })
         .catch(() => showModalAlert('No se pudo eliminar el gasto semanal en el backend.', 'error'));
@@ -216,19 +232,7 @@ document.addEventListener('DOMContentLoaded', function () {
   };
 
   // Sincronizar gastos semanales con backend al cargar la página
-  fetch(`${API_BASE_URL}/semanas`)
-    .then(res => res.json())
-    .then(data => {
-      // Agrupar por semana (1-4)
-      gastosSem = [[],[],[],[]];
-      data.forEach(g => {
-        const idx = (g.semana || 1) - 1;
-        if (gastosSem[idx]) gastosSem[idx].push({ descripcion: g.descripcion, monto: g.monto, fecha: g.fecha });
-      });
-      localStorage.setItem('gastosSemanales', JSON.stringify(gastosSem));
-      renderSemanas();
-    })
-    .catch(() => {/* Si falla, usar localStorage */});
+  syncGastosSemanalesFromBackend();
 
   // Formato de moneda en todos los inputs de modales al mostrarse
   function aplicarFormatoMonedaModales() {

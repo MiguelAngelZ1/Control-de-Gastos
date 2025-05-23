@@ -72,9 +72,36 @@ document.addEventListener('DOMContentLoaded', function () {
   form.onsubmit = function(e) {
     e.preventDefault();
     const descripcion = document.getElementById('descripcionFijo').value.trim();
-    const monto = document.getElementById('montoFijo').value.replace(/\$/g, '').replace(/\./g, '').replace(/,/g, '.');
+    const montoInput = document.getElementById('montoFijo');
+    const monto = montoInput.value.replace(/\$/g, '').replace(/\./g, '').replace(/,/g, '.');
     const estado = document.getElementById('estadoFijo').value;
-    if (!descripcion || !monto || !estado) return;
+    // Validación visual e intuitiva
+    if (!descripcion) {
+      montoInput.classList.remove('input-error');
+      document.getElementById('descripcionFijo').classList.add('input-error');
+      showModalAlert('La descripción es obligatoria', 'error');
+      document.getElementById('descripcionFijo').focus();
+      return;
+    }
+    if (!monto || isNaN(parseFloat(monto)) || parseFloat(monto) <= 0) {
+      document.getElementById('descripcionFijo').classList.remove('input-error');
+      montoInput.classList.add('input-error');
+      showModalAlert('El monto debe ser un número mayor a 0', 'error');
+      montoInput.focus();
+      return;
+    }
+    if (!estado) {
+      montoInput.classList.remove('input-error');
+      document.getElementById('descripcionFijo').classList.remove('input-error');
+      document.getElementById('estadoFijo').classList.add('input-error');
+      showModalAlert('Selecciona un estado', 'error');
+      document.getElementById('estadoFijo').focus();
+      return;
+    }
+    // Limpia errores visuales
+    document.getElementById('descripcionFijo').classList.remove('input-error');
+    montoInput.classList.remove('input-error');
+    document.getElementById('estadoFijo').classList.remove('input-error');
     const idx = form.getAttribute('data-edit');
     // Si es edición, actualizar en backend
     if (idx !== null) {
@@ -100,6 +127,8 @@ document.addEventListener('DOMContentLoaded', function () {
         renderTabla();
         form.reset();
         document.getElementById('modalGastoFijo').style.display = 'none';
+        showModalAlert('Gasto fijo editado correctamente', 'success');
+        setTimeout(() => document.getElementById('btnShowModalGastoFijo').focus(), 500);
         if (typeof window.updateDashboard === 'function') window.updateDashboard();
       })
       .catch(() => showModalAlert('No se pudo actualizar el gasto fijo en el backend.', 'error'));
@@ -118,16 +147,13 @@ document.addEventListener('DOMContentLoaded', function () {
         renderTabla();
         form.reset();
         document.getElementById('modalGastoFijo').style.display = 'none';
+        showModalAlert('Gasto fijo agregado correctamente', 'success');
+        setTimeout(() => document.getElementById('btnShowModalGastoFijo').focus(), 500);
         if (typeof window.updateDashboard === 'function') window.updateDashboard();
       })
       .catch(() => showModalAlert('No se pudo guardar el gasto fijo en el backend.', 'error'));
       return;
     }
-    localStorage.setItem('gastosFijos', JSON.stringify(gastosFijos));
-    renderTabla();
-    form.reset();
-    document.getElementById('modalGastoFijo').style.display = 'none';
-    if (typeof window.updateDashboard === 'function') window.updateDashboard();
   };
 
   // Botón para limpiar solo la tabla de gastos fijos
@@ -206,12 +232,12 @@ document.addEventListener('DOMContentLoaded', function () {
   renderTabla();
 });
 
-// Asegura que API_BASE_URL esté disponible globalmente sin redeclarar
+// Asegura que API_BASE_URL esté disponible globalmente sin redundancia
 if (typeof API_BASE_URL === 'undefined') {
   if (window.API_BASE_URL) {
-    API_BASE_URL = window.API_BASE_URL;
+    window.API_BASE_URL = window.API_BASE_URL;
   } else if (window.parent && window.parent.API_BASE_URL) {
-    API_BASE_URL = window.parent.API_BASE_URL;
+    window.API_BASE_URL = window.parent.API_BASE_URL;
   } else {
     throw new Error('API_BASE_URL no está definida. Asegúrate de incluir config.js antes que gastosFunctions.js');
   }

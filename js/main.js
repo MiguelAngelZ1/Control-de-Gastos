@@ -54,12 +54,12 @@ document.addEventListener('DOMContentLoaded', function () {
   updateDashboard();
 });
 
-// Asegura que API_BASE_URL esté disponible globalmente sin redeclarar
+// Asegura que API_BASE_URL esté disponible globalmente sin redundancia
 if (typeof API_BASE_URL === 'undefined') {
   if (window.API_BASE_URL) {
-    API_BASE_URL = window.API_BASE_URL;
+    window.API_BASE_URL = window.API_BASE_URL;
   } else if (window.parent && window.parent.API_BASE_URL) {
-    API_BASE_URL = window.parent.API_BASE_URL;
+    window.API_BASE_URL = window.parent.API_BASE_URL;
   } else {
     throw new Error('API_BASE_URL no está definida. Asegúrate de incluir config.js antes que main.js');
   }
