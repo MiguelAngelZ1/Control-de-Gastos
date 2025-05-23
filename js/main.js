@@ -132,7 +132,7 @@ function agregarBotonReiniciar() {
     showModalConfirm('¿Seguro que deseas borrar todos los datos? Esta acción no se puede deshacer.', function(ok) {
       if (ok) {
         // Llamar primero al backend para eliminar datos en la base de datos
-        fetch('http://localhost:3000/api/reiniciar-todos', {
+        fetch(`${API_BASE_URL}/reiniciar-todos`, {
           method: 'DELETE',
         })
         .then(response => {

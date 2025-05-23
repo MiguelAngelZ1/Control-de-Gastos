@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
       // Aquí podrías agregar lógica para actualizar en backend si lo deseas
     } else {
       // Guardar en backend
-      fetch('http://localhost:3000/api/gastos-fijos', {
+      fetch(`${API_BASE_URL}/gastos-fijos`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ descripcion, monto: parseFloat(monto), observaciones: '', estado })
@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function () {
     showModalConfirm('¿Seguro que deseas borrar todos los gastos fijos?', function(confirmado) {
       if (confirmado) {
         // Llamar al backend para eliminar todos los gastos fijos
-        fetch('http://localhost:3000/api/gastos-fijos', { method: 'DELETE' })
+        fetch(`${API_BASE_URL}/gastos-fijos`, { method: 'DELETE' })
           .then(response => {
             if (!response.ok) throw new Error('Error al limpiar gastos fijos en el backend');
             gastosFijos = [];
@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function () {
   };
 
   // Sincronizar gastos fijos con backend al cargar la página
-  fetch('http://localhost:3000/api/gastos-fijos')
+  fetch(`${API_BASE_URL}/gastos-fijos`)
     .then(res => res.json())
     .then(data => {
       gastosFijos = data.map(g => ({ descripcion: g.descripcion, monto: g.monto, estado: g.estado }));

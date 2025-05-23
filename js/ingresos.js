@@ -78,7 +78,7 @@ document.getElementById('btnAgregarIngreso').addEventListener('click', function(
   const nuevoIngreso = parseFloat(rawValue) || 0;
   if (nuevoIngreso > 0) {
     // Guardar en backend
-    fetch('http://localhost:3000/api/ingresos', {
+    fetch(`${API_BASE_URL}/ingresos`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ monto: nuevoIngreso, descripcion: 'Ingreso manual' })
@@ -103,7 +103,7 @@ document.getElementById('btnAgregarIngreso').addEventListener('click', function(
  */
 document.getElementById('btnLimpiarIngreso').addEventListener('click', function() {
   // Eliminar todos los ingresos en el backend
-  fetch('http://localhost:3000/api/ingresos', { method: 'DELETE' })
+  fetch(`${API_BASE_URL}/ingresos`, { method: 'DELETE' })
     .then(() => {
       ingresoTotalAcumulado = 0;
       localStorage.setItem('ingresoTotal', ingresoTotalAcumulado);
@@ -114,7 +114,7 @@ document.getElementById('btnLimpiarIngreso').addEventListener('click', function(
 });
 
 // Al cargar la página, obtener el ingreso total desde el backend
-fetch('http://localhost:3000/api/ingresos')
+fetch(`${API_BASE_URL}/ingresos`)
   .then(res => res.json())
   .then(data => {
     // Sumar todos los ingresos registrados en la base de datos

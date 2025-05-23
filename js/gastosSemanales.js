@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (ok) {
         const gasto = gastosSem[semanaIdx][gastoIdx];
         // Eliminar en backend
-        fetch('http://localhost:3000/api/semanas', {
+        fetch(`${API_BASE_URL}/semanas`, {
           method: 'DELETE',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ semana: semanaIdx+1, descripcion: gasto.descripcion, monto: gasto.monto, fecha: gasto.fecha })
@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function () {
   };
 
   // Sincronizar gastos semanales con backend al cargar la página
-  fetch('http://localhost:3000/api/semanas')
+  fetch(`${API_BASE_URL}/semanas`)
     .then(res => res.json())
     .then(data => {
       // Agrupar por semana (1-4)
