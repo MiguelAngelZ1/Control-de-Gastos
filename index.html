@@ -23,13 +23,18 @@
   <header class="site-header">
     <div class="header-content">
       <h1 class="site-title"><i class="fa-solid fa-dollar-sign"></i> Control de Gastos</h1>
+      <nav class="main-nav">
+        <a href="/Control-de-Gastos/plantillas/gastos.html" class="btn btn-nav-main">
+          <i class="fa-solid fa-wallet"></i> Ir a Gastos
+        </a>
+      </nav>
     </div>
   </header>
   <!-- CONTENIDO PRINCIPAL -->
-  <main class="site-main main-flex">
-    <section class="dashboard-container">
-      <!-- Sección de Ingresos -->
-      <div class="ingresos-card card-shadow">
+  <main class="site-main">
+    <!-- Sección de Ingresos -->
+    <section id="ingresos" class="ingresos-section">
+      <div class="ingresos-card">
         <h2 class="section-title ingresos-title"><i class="fa-solid fa-circle-plus"></i> Registrar Ingreso</h2>
         <form class="ingresos-form">
           <div class="input-group">
@@ -44,30 +49,22 @@
             </button>
           </div>
         </form>
-      </div>
-      <!-- Sección de Resumen Financiero -->
-      <div class="resumen-card card-shadow">
-        <h2 class="section-title resumen-title"><i class="fa-solid fa-chart-pie"></i> Resumen Financiero</h2>
-        <div class="resumen-grid">
-          <div class="resumen-item">
-            <span class="resumen-label"><i class="fa-solid fa-sack-dollar"></i> Ingreso Total:</span>
-            <span id="ingresoTotal" class="resumen-value">$0</span>
+        <section id="resumen-financiero" class="resumen-section">
+          <div class="resumen-grid">
+            <div class="resumen-item">
+              <span class="resumen-label"><i class="fa-solid fa-sack-dollar"></i> Ingreso Total:</span>
+              <span id="ingresoTotal" class="resumen-value">$0</span>
+            </div>
+            <div class="resumen-item">
+              <span class="resumen-label"><i class="fa-solid fa-money-bill-wave"></i> Total Gastado:</span>
+              <span id="totalGastado" class="resumen-value">$0</span>
+            </div>
+            <div class="resumen-item">
+              <span class="resumen-label"><i class="fa-solid fa-wallet"></i> Saldo Restante:</span>
+              <span id="saldoRestante" class="resumen-value">$0</span>
+            </div>
           </div>
-          <div class="resumen-item">
-            <span class="resumen-label"><i class="fa-solid fa-money-bill-wave"></i> Total Gastado:</span>
-            <span id="totalGastado" class="resumen-value">$0</span>
-          </div>
-          <div class="resumen-item">
-            <span class="resumen-label"><i class="fa-solid fa-wallet"></i> Saldo Restante:</span>
-            <span id="saldoRestante" class="resumen-value">$0</span>
-          </div>
-        </div>
-      </div>
-      <!-- Botón de navegación a Gastos -->
-      <div class="gastos-nav-container">
-        <a href="/Control-de-Gastos/plantillas/gastos.html" class="btn btn-nav-main btn-nav-outside">
-          <i class="fa-solid fa-wallet"></i> Ir a Gastos
-        </a>
+        </section>
       </div>
     </section>
   </main>
