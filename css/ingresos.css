@@ -2,12 +2,13 @@
 
 .ingresos-section {
   width: 100%;
+  min-height: 70vh;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  margin-top: 2.5rem;
-  margin-bottom: 2rem;
-  min-height: 60vh;
+  align-items: center;
+  margin: 0;
+  padding: 2.5vh 0;
+  background: transparent;
 }
 
 .ingresos-card {
@@ -15,14 +16,17 @@
   border-radius: 18px;
   box-shadow: 0 6px 32px rgba(59,130,246,0.10), 0 1.5px 8px rgba(34,197,94,0.06);
   padding: 2.5rem 2.5rem 2rem 2.5rem;
-  max-width: 420px;
+  max-width: 480px;
   width: 100%;
+  min-width: 320px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 1.7rem;
   border: 1.5px solid #e0e7ef;
   transition: box-shadow 0.2s;
+  min-height: 420px;
+  justify-content: center;
 }
 
 .ingresos-card:hover, .ingresos-card:focus-within {
@@ -150,9 +154,15 @@
 }
 
 @media (max-width: 600px) {
+  .ingresos-section {
+    min-height: 90vh;
+    padding: 1.5vh 0;
+  }
   .ingresos-card {
     padding: 1.2rem 0.7rem 1rem 0.7rem;
     max-width: 98vw;
+    min-width: unset;
+    min-height: 340px;
   }
   .ingresos-title {
     font-size: 1.15rem;
