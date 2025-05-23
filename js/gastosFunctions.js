@@ -77,11 +77,34 @@ document.addEventListener('DOMContentLoaded', function () {
     const estado = document.getElementById('estadoFijo').value;
     if (!descripcion || !monto || !estado) return;
     const idx = form.getAttribute('data-edit');
-    // Si es edición, solo local, si es nuevo, enviar al backend
+    // Si es edición, actualizar en backend
     if (idx !== null) {
-      gastosFijos[idx] = { descripcion, monto: parseFloat(monto), estado };
-      form.removeAttribute('data-edit');
-      // Aquí podrías agregar lógica para actualizar en backend si lo deseas
+      const gastoAnterior = gastosFijos[idx];
+      fetch(`${API_BASE_URL}/gastos-fijos`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ descripcion: gastoAnterior.descripcion, monto: gastoAnterior.monto, estado: gastoAnterior.estado })
+      })
+      .then(() => {
+        // Luego agregar el nuevo (editado)
+        return fetch(`${API_BASE_URL}/gastos-fijos`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ descripcion, monto: parseFloat(monto), observaciones: '', estado })
+        });
+      })
+      .then(res => res.json())
+      .then(gasto => {
+        gastosFijos[idx] = { descripcion: gasto.descripcion, monto: gasto.monto, estado: gasto.estado };
+        form.removeAttribute('data-edit');
+        localStorage.setItem('gastosFijos', JSON.stringify(gastosFijos));
+        renderTabla();
+        form.reset();
+        document.getElementById('modalGastoFijo').style.display = 'none';
+        if (typeof window.updateDashboard === 'function') window.updateDashboard();
+      })
+      .catch(() => showModalAlert('No se pudo actualizar el gasto fijo en el backend.', 'error'));
+      return;
     } else {
       // Guardar en backend
       fetch(`${API_BASE_URL}/gastos-fijos`, {
@@ -96,7 +119,6 @@ document.addEventListener('DOMContentLoaded', function () {
         renderTabla();
         form.reset();
         document.getElementById('modalGastoFijo').style.display = 'none';
-        // Actualizar dashboard
         if (typeof window.updateDashboard === 'function') window.updateDashboard();
       })
       .catch(() => showModalAlert('No se pudo guardar el gasto fijo en el backend.', 'error'));
@@ -184,3 +206,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
   renderTabla();
 });
+
+// Asegura que API_BASE_URL esté disponible globalmente
+if (typeof API_BASE_URL === 'undefined') {
+  if (window.API_BASE_URL) {
+    var API_BASE_URL = window.API_BASE_URL;
+  } else if (window.parent && window.parent.API_BASE_URL) {
+    var API_BASE_URL = window.parent.API_BASE_URL;
+  } else {
+    throw new Error('API_BASE_URL no está definida. Asegúrate de incluir config.js antes que gastosFunctions.js');
+  }
+}

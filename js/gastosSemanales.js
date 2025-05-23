@@ -3,6 +3,17 @@ document.addEventListener('DOMContentLoaded', function () {
   const container = document.getElementById('gastosSemanalesContainer');
   if (!container) return;
 
+  // Asegura que API_BASE_URL esté disponible globalmente
+  if (typeof API_BASE_URL === 'undefined') {
+    if (window.API_BASE_URL) {
+      var API_BASE_URL = window.API_BASE_URL;
+    } else if (window.parent && window.parent.API_BASE_URL) {
+      var API_BASE_URL = window.parent.API_BASE_URL;
+    } else {
+      throw new Error('API_BASE_URL no está definida. Asegúrate de incluir config.js antes que gastosSemanales.js');
+    }
+  }
+
   // Calcula el presupuesto restante después de gastos fijos
   function getPresupuestoSemanal() {
     const ingresoTotal = parseFloat(localStorage.getItem('ingresoTotal')) || 0;

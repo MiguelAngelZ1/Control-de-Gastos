@@ -35,6 +35,23 @@
     </div>
   </header>
   <main class="site-main">
+    <!-- Resumen financiero -->
+    <section class="resumen-section resumen-gastos">
+      <div class="resumen-grid">
+        <div class="resumen-item">
+          <span class="resumen-label"><i class="fa-solid fa-sack-dollar"></i> Ingreso Total:</span>
+          <span id="ingresoTotalGastos" class="resumen-value">$0</span>
+        </div>
+        <div class="resumen-item">
+          <span class="resumen-label"><i class="fa-solid fa-coins"></i> Presupuesto Semanal:</span>
+          <span id="presupuestoSemanalResumen" class="resumen-value">$0</span>
+        </div>
+        <div class="resumen-item">
+          <span class="resumen-label"><i class="fa-solid fa-wallet"></i> Saldo Restante:</span>
+          <span id="saldoRestanteGastos" class="resumen-value">$0</span>
+        </div>
+      </div>
+    </section>
     <!-- Formulario para agregar gasto fijo (modal) -->
     <button class="btn btn-add" id="btnShowModalGastoFijo" style="margin-bottom:1.5rem;">
       <i class="fa-solid fa-plus"></i> Agregar Gasto Fijo
@@ -113,10 +130,24 @@
   </footer>
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/cleave.js@1.6.0/dist/cleave.min.js"></script>
+  <script src="/Control-de-Gastos/js/config.js"></script>
   <script src="/Control-de-Gastos/js/gastosFunctions.js"></script>
   <script src="/Control-de-Gastos/js/gastosSemanales.js"></script>
   <script src="/Control-de-Gastos/js/main.js"></script>
   <script>
+    // Resumen financiero en página de gastos
+    function actualizarResumenGastos() {
+      const ingresoTotal = parseFloat(localStorage.getItem('ingresoTotal')) || 0;
+      const presupuestoSemanal = JSON.parse(localStorage.getItem('presupuestoSemanal') || '{}').total || 0;
+      const gastosFijos = JSON.parse(localStorage.getItem('gastosFijos')) || [];
+      const totalFijos = gastosFijos.reduce((acc, g) => acc + Number(g.monto), 0);
+      const saldoRestante = ingresoTotal - totalFijos;
+      document.getElementById('ingresoTotalGastos').innerText = '$' + ingresoTotal.toLocaleString('es-AR', {minimumFractionDigits:2});
+      document.getElementById('presupuestoSemanalResumen').innerText = '$' + presupuestoSemanal.toLocaleString('es-AR', {minimumFractionDigits:2});
+      document.getElementById('saldoRestanteGastos').innerText = '$' + saldoRestante.toLocaleString('es-AR', {minimumFractionDigits:2});
+    }
+    actualizarResumenGastos();
+    window.addEventListener('storage', actualizarResumenGastos);
     // Modal lógica básica
     document.getElementById('btnShowModalGastoFijo').onclick = () => {
       document.getElementById('modalGastoFijo').style.display = 'block';
