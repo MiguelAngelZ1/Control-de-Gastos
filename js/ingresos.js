@@ -9,6 +9,11 @@
       tomando en cuenta los gastos ya registrados.
 */
 
+// Asegura que API_BASE_URL esté disponible globalmente
+if (typeof API_BASE_URL === 'undefined' && window.API_BASE_URL) {
+  var API_BASE_URL = window.API_BASE_URL;
+}
+
 // Recupera el ingreso total almacenado en localStorage o usa 0 si no existe.
 let ingresoTotalAcumulado = parseFloat(localStorage.getItem('ingresoTotal')) || 0;
 
