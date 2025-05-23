@@ -143,30 +143,46 @@ document.addEventListener('DOMContentLoaded', function () {
     for (let i = 0; i < 4; i++) {
       const gastosSemana = gastosSem[i] || [];
       const gastado = gastosSemana.reduce((acc, g) => acc + Number(g.monto), 0);
-      const porcentaje = presupuesto ? Math.max(0, Math.min(100, (gastado / presupuesto) * 100)) : 0;
-      // Color dinámico: verde (0%) a rojo (100%)
+      const restante = Math.max(0, presupuesto - gastado);
+      // Porcentaje gastado respecto al presupuesto semanal
+      const porcentajeGastado = presupuesto ? Math.min(100, (gastado / presupuesto) * 100) : 0;
+      const porcentajeBarra = 100 - porcentajeGastado;
       let color = 'green';
-      if (porcentaje > 80) color = 'red';
-      else if (porcentaje > 50) color = 'yellow';
-      else if (porcentaje > 30) color = 'orange';
+      if (porcentajeBarra <= 20) color = 'red';
+      else if (porcentajeBarra <= 50) color = 'yellow';
+      else if (porcentajeBarra <= 70) color = 'orange';
       else color = 'green';
-      // Barra con presupuesto en el centro
       container.innerHTML += `
         <div class="semana-bar-container">
           <span class="semana-bar-label">Semana ${i+1}</span>
           <div class="semana-bar-bg">
-            <div class="semana-bar-fill ${color}" style="width:${Math.min(100, porcentaje)}%;">
+            <div class="semana-bar-fill ${color}" style="width:${porcentajeBarra}%">
               <span class="presupuesto-barra">$${presupuesto.toLocaleString('es-AR', {minimumFractionDigits:2})}</span>
             </div>
           </div>
+          <div class="semana-bar-info">
+            <span class="gastado-info">Gastado: <b>$${gastado.toLocaleString('es-AR', {minimumFractionDigits:2})}</b></span>
+            <span class="restante-info">Restante: <b>$${restante.toLocaleString('es-AR', {minimumFractionDigits:2})}</b></span>
+          </div>
           <button class="btn btn-add" onclick="agregarGastoSemana(${i})"><i class="fa-solid fa-plus"></i> Agregar Gasto</button>
           <ul>
-            ${gastosSemana.map(g => `<li>${g.descripcion} - $${Number(g.monto).toLocaleString('es-AR', {minimumFractionDigits:2})} <span style=\"color:#888;font-size:0.95em;\">(${g.fecha})</span></li>`).join('')}
+            ${gastosSemana.map((g, idx) => `<li>${g.descripcion} - $${Number(g.monto).toLocaleString('es-AR', {minimumFractionDigits:2})} <span style=\"color:#888;font-size:0.95em;\">(${g.fecha})</span> <button class='btn btn-clear btn-sm' title='Eliminar' onclick='eliminarGastoSemana(${i},${idx})'><i class='fa-solid fa-trash'></i></button></li>`).join('')}
           </ul>
         </div>
       `;
     }
   }
+
+  window.eliminarGastoSemana = function(semanaIdx, gastoIdx) {
+    showModalConfirm('¿Eliminar este gasto de la semana?', function(ok) {
+      if (ok) {
+        gastosSem[semanaIdx].splice(gastoIdx, 1);
+        localStorage.setItem('gastosSemanales', JSON.stringify(gastosSem));
+        renderSemanas();
+        showModalAlert('Gasto eliminado', 'success');
+      }
+    });
+  };
 
   // Formato de moneda en todos los inputs de modales al mostrarse
   function aplicarFormatoMonedaModales() {

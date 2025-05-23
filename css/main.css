@@ -546,6 +546,32 @@ a:hover {
   z-index: 3;
   pointer-events: none;
 }
+.semana-bar-info {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.3rem 0 0.7rem 0;
+  font-size: 1.01rem;
+  color: #1e293b;
+  gap: 1.2rem;
+}
+.gastado-info b {
+  color: #f87171;
+}
+.restante-info b {
+  color: #22c55e;
+}
+.btn-sm {
+  min-width: 28px !important;
+  width: 28px !important;
+  height: 28px !important;
+  padding: 0 !important;
+  font-size: 1rem !important;
+  border-radius: 50% !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0.3rem;
+}
 
 /* Footer y redes sociales */
 .site-footer {

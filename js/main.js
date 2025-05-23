@@ -132,8 +132,8 @@ function agregarBotonReiniciar() {
     showModalConfirm('¿Seguro que deseas borrar todos los datos? Esta acción no se puede deshacer.', function(ok) {
       if (ok) {
         localStorage.clear();
-        showModalAlert('Todos los datos han sido eliminados.', 'success');
-        setTimeout(()=>location.reload(), 1200);
+        // Forzar recarga total para limpiar todos los datos y el estado de la UI
+        window.location.reload();
       }
     });
   };
